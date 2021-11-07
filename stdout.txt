@@ -1,0 +1,14 @@
+DOSBox version ECE
+Copyright 2002-2021 DOSBox Team, published under GNU GPL.
+---
+CONFIG: Loading primary settings from config file C:\SCICompanion\Tools\dosbox.conf
+MIDI:fluidsynth: loaded soundfont: C:\SCICompanion\Tools\DOSBox\arachno.sf2
+MIDI: Opened device:fluidsynth
+PC speaker output buffer length: 145
+mixer callback wants too many samples from pc speaker emulator: 1103
+mixer callback wants too many samples from pc speaker emulator: 957
+mixer callback wants too many samples from pc speaker emulator: 812
+mixer callback wants too many samples from pc speaker emulator: 667
+mixer callback wants too many samples from pc speaker emulator: 522
+mixer callback wants too many samples from pc speaker emulator: 377
+mixer callback wants too many samples from pc speaker emulator: 232
