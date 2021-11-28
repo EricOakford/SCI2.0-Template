@@ -10,10 +10,15 @@
 ;
 
 (script# MAIN)
-(include game.sh)
+(include game.sh) (include "0.shm")
 (use Plane)
 (use Game)
+(use Messager)
+(use Grooper)
+(use Talker)
 (use IconBar)
+(use GameEgo)
+(use StopWalk)
 (use Ego)
 (use System)
 
@@ -114,7 +119,7 @@
 	disabledIcons
 )
 
-(instance egoObj of Ego
+(instance egoObj of GameEgo
 	(properties
 		view vEgo
 	)
@@ -128,10 +133,67 @@
 		(user alterEgo: ego)
 		(= handsOnCode gameHandsOnCode)
 		(= handsOffCode gameHandsOffCode)
+		(= approachCode gameApproachCode)
+		(= doVerbCode gameDoVerbCode)
+		(= messager gameMessager)
+		((= narrator Narrator)
+			font: userFont
+			fore: 7
+			back: 0
+		)
 		((ScriptID GAME_ICONBAR 0) init:)
+		((ScriptID GAME_INV 0) init:)
 		(self newRoom: TESTROOM)
 	)
+
+	(method (startRoom roomNum)	
+		(super startRoom: roomNum)
+		(if
+			(and
+				(ego cycler?)
+				(not (ego looper?))
+				((ego cycler?) isKindOf: StopWalk)
+			)
+			(ego setLooper: stopGroop)
+		)
+	)
+
+	(method (pragmaFail &tmp theVerb)
+		;nobody responds to user input
+		(if (user canInput:)
+			(= theVerb ((user curEvent?) message?))
+			(if (OneOf theVerb V_DO V_LOOK V_TALK)
+				(messager say: N_PRAGFAIL theVerb NULL 1 0 MAIN)
+			else ;non-handled verb
+				(messager say: N_PRAGFAIL V_COMBINE NULL 1 0 MAIN)
+			)
+		)
+	)
 )
+
+(instance gameApproachCode of Code
+	(method (doit theVerb)
+		(switch theVerb
+			(V_LOOK $0001)
+			(V_TALK $0002)
+			(V_WALK $0004)
+			(V_DO $0008)
+			(else  $8000)
+		)
+	)
+)
+
+(instance gameDoVerbCode of Code
+	;if there is no corresponding message for an object and verb, bring up a default message.
+	(method (doit theVerb)
+		(if (OneOf theVerb V_LOOK V_DO V_TALK)
+			(messager say: N_VERB_GENERIC theVerb NULL 1 0 MAIN)
+		else ;non-handled verb
+			(messager say: N_VERB_GENERIC V_COMBINE NULL 1 0 MAIN)
+		)
+	)
+)
+
 
 (instance gameHandsOnCode of Code
 	(method (doit)
@@ -169,6 +231,22 @@
 	)
 )
 
+(instance gameMessager of Messager
+	(method (findTalker who &tmp theTalker)
+		(if
+			(= theTalker
+				(switch who
+					(else  narrator)
+				)
+			)
+			(return)
+		else
+			(super findTalker: who)
+		)
+	)
+)
+
+
 (instance checkIcon of Code
 	(method (doit theIcon)
 		(if
@@ -180,3 +258,5 @@
 		)
 	)
 )
+
+(instance stopGroop of GradualLooper)

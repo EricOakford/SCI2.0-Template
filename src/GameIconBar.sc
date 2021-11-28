@@ -58,6 +58,9 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 0
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 0
 	)
 	
 	(method (select)
@@ -84,6 +87,9 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 1
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 1
 	)
 
 	(method (init)
@@ -91,9 +97,9 @@
 			(+
 				(iconWalk x?)
 				(CelWide
-					(iconWalk view?)
-					(iconWalk loop?)
-					(iconWalk cel?)
+					(iconWalk mainView?)
+					(iconWalk mainLoop?)
+					(iconWalk mainCel?)
 				)
 			)
 		)
@@ -113,6 +119,9 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 2
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 2
 	)
 
 	(method (init)
@@ -120,9 +129,9 @@
 			(+
 				(iconLook x?)
 				(CelWide
-					(iconLook view?)
-					(iconLook loop?)
-					(iconLook cel?)
+					(iconLook mainView?)
+					(iconLook mainLoop?)
+					(iconLook mainCel?)
 				)
 			)
 		)
@@ -142,15 +151,18 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 3
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 3
 	)
 	(method (init)
 		(= x
 			(+
 				(iconDo x?)
 				(CelWide
-					(iconDo view?)
-					(iconDo loop?)
-					(iconDo cel?)
+					(iconDo mainView?)
+					(iconDo mainLoop?)
+					(iconDo mainCel?)
 				)
 			)
 		)
@@ -167,6 +179,9 @@
 		signal IMMEDIATE
 		noun N_CUSTOM
 		helpVerb V_HELP
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 9
 	)
 	
 	(method (init)
@@ -174,9 +189,9 @@
 			(+
 				(iconTalk x?)
 				(CelWide
-					(iconTalk view?)
-					(iconTalk loop?)
-					(iconTalk cel?)
+					(iconTalk mainView?)
+					(iconTalk mainLoop?)
+					(iconTalk mainCel?)
 				)
 			)
 		)
@@ -198,15 +213,18 @@
 		signal (| HIDEBAR RELVERIFY)
 		noun N_CURITEM
 		helpVerb V_HELP
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 4
 	)
 	(method (init)
 		(= x
 			(+
 				(iconCustom x?)
 				(CelWide
-					(iconCustom view?)
-					(iconCustom loop?)
-					(iconCustom cel?)
+					(iconCustom mainView?)
+					(iconCustom mainLoop?)
+					(iconCustom mainCel?)
 				)
 			)
 		)
@@ -224,6 +242,9 @@
 		signal (| HIDEBAR RELVERIFY IMMEDIATE)
 		noun N_INVENTORY
 		helpVerb V_HELP
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 5
 	)
 
 	(method (init)
@@ -231,9 +252,9 @@
 			(+
 				(iconUseIt x?)
 				(CelWide
-					(iconUseIt view?)
-					(iconUseIt loop?)
-					(iconUseIt cel?)
+					(iconUseIt mainView?)
+					(iconUseIt mainLoop?)
+					(iconUseIt mainCel?)
 				)
 			)
 		)
@@ -243,7 +264,7 @@
 	(method (select)
 		(return
 			(if (super select: &rest)
-				;(ego showInv:)
+				(ego showInv:)
 				(return TRUE)
 			else
 				(return FALSE)
@@ -261,6 +282,9 @@
 		signal (| HIDEBAR RELVERIFY IMMEDIATE)
 		noun N_CONTROL
 		helpVerb V_HELP
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 7
 	)
 	
 	(method (init)
@@ -268,9 +292,9 @@
 			(+
 				(iconInventory x?)
 				(CelWide
-					(iconInventory view?)
-					(iconInventory loop?)
-					(iconInventory cel?)
+					(iconInventory mainView?)
+					(iconInventory mainLoop?)
+					(iconInventory mainCel?)
 				)
 			)
 		)
@@ -302,15 +326,18 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 4
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 8
 	)
 	(method (init)
 		(= x
 			(+
 				(iconControlPanel x?)
 				(CelWide
-					(iconControlPanel view?)
-					(iconControlPanel loop?)
-					(iconControlPanel cel?)
+					(iconControlPanel mainView?)
+					(iconControlPanel mainLoop?)
+					(iconControlPanel mainCel?)
 				)
 			)
 		)

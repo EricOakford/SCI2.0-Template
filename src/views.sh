@@ -32,7 +32,6 @@
 		lScoreIcon
 		lDisabledIcon
 	)
-(define vIconCursors	991)
 	
 (define vInvIcons 991)
 	(enum
@@ -43,6 +42,8 @@
 		lInvSelect
 		lInvMore
 	)
+(define vIconCursors	992)
+(define vInvWindow		993)
 
 (define vControlIcons 995)
 	(enum
