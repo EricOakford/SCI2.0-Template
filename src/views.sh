@@ -27,13 +27,12 @@
 		lInvIcon
 		lExitIcon
 		lControlIcon
-		lDummyIcon
 		lHelpIcon
 		lCustomIcon
 		lScoreIcon
-		lDummyIcon2
 		lDisabledIcon
 	)
+(define vIconCursors	991)
 	
 (define vInvIcons 991)
 	(enum

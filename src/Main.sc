@@ -13,6 +13,9 @@
 (include game.sh)
 (use Plane)
 (use Game)
+(use IconBar)
+(use Ego)
+(use System)
 
 (public
 	SCI2 0
@@ -108,11 +111,72 @@
 		global98
 	lastSysGlobal
 	;globals > 99 are for game use
+	disabledIcons
+)
+
+(instance egoObj of Ego
+	(properties
+		view vEgo
+	)
 )
 
 (instance SCI2 of Game
 	(method (init)
 		(= systemPlane Plane)
 		(super init:)
+		(= ego egoObj)
+		(user alterEgo: ego)
+		(= handsOnCode gameHandsOnCode)
+		(= handsOffCode gameHandsOffCode)
+		((ScriptID GAME_ICONBAR 0) init:)
+		(self newRoom: TESTROOM)
+	)
+)
+
+(instance gameHandsOnCode of Code
+	(method (doit)
+		(user canControl: TRUE canInput: TRUE)
+		(theIconBar enable:
+			ICON_WALK
+			ICON_LOOK
+			ICON_DO
+			ICON_TALK
+			ICON_CURITEM
+			ICON_INVENTORY
+			ICON_CONTROL
+			ICON_HELP
+		)
+		(if (not (theIconBar curInvIcon?))
+			(theIconBar disable: ICON_CURITEM)
+		)
+	)
+)
+
+(instance gameHandsOffCode of Code
+	(method (doit)
+		(user canControl: FALSE canInput: FALSE)
+		(= disabledIcons NULL)
+		(theIconBar disable:
+			ICON_WALK
+			ICON_LOOK
+			ICON_DO
+			ICON_TALK
+			ICON_CUSTOM
+			ICON_CURITEM
+			ICON_INVENTORY
+		)
+		(theIconBar eachElementDo: #perform checkIcon)
+	)
+)
+
+(instance checkIcon of Code
+	(method (doit theIcon)
+		(if
+			(and
+				(theIcon isKindOf: IconItem)
+				(& (theIcon signal?) DISABLED)
+			)
+			(|= disabledIcons (>> $8000 (theIconBar indexOf: theIcon)))
+		)
 	)
 )
