@@ -46,8 +46,7 @@
 	)
 	;This is the game-specific inventory	
 	(method (init)
-		(= inventory self)
-		(self
+		((= inventory self)
 			add:
 			;add inventory items here
 				Money

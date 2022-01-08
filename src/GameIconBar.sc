@@ -30,7 +30,7 @@
 			;These correspond to ICON_*** in game.sh
 				iconWalk iconLook iconDo iconTalk iconCustom
 				iconUseIt iconInventory iconControlPanel iconHelp
-			curIcon: iconWalk
+			curIcon: iconWalk	;gotta start somewhere
 			useIconItem: iconUseIt
 			helpIconItem: iconHelp
 			walkIconItem: iconWalk
@@ -61,17 +61,6 @@
 		maskView vIconBar
 		maskLoop lDisabledIcon
 		maskCel 0
-	)
-	
-	(method (select)
-		(return
-			(if (super select: &rest)
-				(theIconBar hide:)
-				(return TRUE)
-			else
-				(return FALSE)
-			)
-		)
 	)
 )
 
@@ -155,6 +144,7 @@
 		maskLoop lDisabledIcon
 		maskCel 3
 	)
+	
 	(method (init)
 		(= x
 			(+

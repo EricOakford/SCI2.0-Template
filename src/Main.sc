@@ -14,16 +14,26 @@
 (use Plane)
 (use Game)
 (use Messager)
+(use Flags)
 (use Grooper)
 (use Talker)
+(use Sound)
+(use String)
+(use DText)
 (use IconBar)
 (use GameEgo)
 (use StopWalk)
 (use Ego)
+(use Actor)
 (use System)
 
 (public
 	SCI2 0
+	Bset 1
+	Bclr 2
+	Btst 3
+	EgoDead 4
+
 )
 
 (local
@@ -116,8 +126,57 @@
 		global98
 	lastSysGlobal
 	;globals > 99 are for game use
+	myTextColor				;color of text in message boxes
+	myBackColor				;color of message boxes
+	myHighlightColor		;color of icon highlight
+	myLowlightColor			;color of icon lowlight
+	debugging				;debug mode enabled
+	statusLine				;pointer for status line code
+	soundFx					;sound effect being played
+	theMusic				;music object, current playing music
+	globalSound				;ambient sound
 	disabledIcons
+	oldCurIcon
+	scoreFont				;font for displaying the score in the control panel
+	numDACs					;Number of voices supported by digital audio driver
+	numVoices				;Number of voices supported by sound driver
+	deathReason				;message to display when calling EgoDead
+	gameFlags				;pointer for Flags object, which only requires one global
+
 )
+
+;These will be replaced with macro defines once those are supported
+(procedure (Bset flagEnum)
+;;;	(|= [gameFlags (/ flagEnum 16)] (>> $8000 (mod flagEnum 16))
+	(gameFlags set: flagEnum)
+)
+
+(procedure (Bclr flagEnum)
+;;;	(&= [gameFlags (/ flagEnum 16)] (~ (>> $8000 (mod flagEnum 16))))
+	(gameFlags clear: flagEnum)
+)
+
+(procedure (Btst flagEnum)
+;;;	(return
+;;;		(&
+;;;			[gameFlags (/ flagEnum 16)]
+;;;			(>> $8000 (mod flagEnum 16))
+;;;		)
+;;;	)
+	(gameFlags test: flagEnum)
+)
+
+(procedure (EgoDead theReason)
+	;This procedure handles when ego dies. It closely matches that of SQ4, SQ5 and KQ6.
+	;If a specific message is not given, the game will use a default message.
+	(if (not argc)
+		(= deathReason deathGENERIC)
+	else
+		(= deathReason theReason)
+	)
+	(curRoom newRoom: DEATH)
+)
+
 
 (instance egoObj of GameEgo
 	(properties
@@ -126,24 +185,54 @@
 )
 
 (instance SCI2 of Game
+	; The main game instance. It adds game-specific functionality.	
+	(properties
+		printLang ENGLISH	;set your game's language here. Supported languages can be found in SYSTEM.SH.
+	)
+
 	(method (init)
 		(= systemPlane Plane)
 		(super init:)
-		(= ego egoObj)
-		(user alterEgo: ego)
-		(= handsOnCode gameHandsOnCode)
-		(= handsOffCode gameHandsOffCode)
-		(= approachCode gameApproachCode)
-		(= doVerbCode gameDoVerbCode)
-		(= messager gameMessager)
-		((= narrator Narrator)
-			font: userFont
-			fore: 7
-			back: 0
+
+		;Assign globals to this script's objects
+		((= theMusic musicSound)
+			owner: self
+			init:
 		)
+		((= globalSound theGlobalSound)
+			owner: self
+			init:
+		)
+		((= soundFx soundEffects)
+			owner: self
+			init:
+		)
+		(pointsSound
+			owner: self
+			init:
+			setPri: 15
+			setLoop: 1
+		)
+		(= messager gameMessager)
+		(= doVerbCode gameDoVerbCode)
+		(= approachCode gameApproachCode)
+		(= handsOffCode gameHandsOff)
+		(= handsOnCode gameHandsOn)
+		(= statusLine statusCode)
+		((= gameFlags gameEventFlags)
+			init:
+		)
+		(statusPlane init:)
+		(= statusLine statusCode)
+		((= altPolyList (List new:)) name: {altPolys} add:)
+
+		;load up the ego, icon bar, inventory, and control panel
+		(= ego egoObj)
 		((ScriptID GAME_ICONBAR 0) init:)
 		((ScriptID GAME_INV 0) init:)
-		(self newRoom: TESTROOM)
+		
+		;anything not requiring objects in this script is loaded in GAME_INIT.SC
+		((ScriptID GAME_INIT 0) doit:)
 	)
 
 	(method (startRoom roomNum)	
@@ -156,6 +245,33 @@
 			)
 			(ego setLooper: stopGroop)
 		)
+		(statusCode doit: roomNum)
+		(if debugging
+			((ScriptID DEBUG 0) init:)
+		)
+	)
+	
+	(method (handleEvent event)
+		(if (== (event type?) keyDown)
+			(switch (event message?)
+				(`#5
+					(theGame save:)
+					(event claimed: TRUE)
+				)
+				(`#7
+					(theGame restore:)
+					(event claimed: TRUE)
+				)
+			)
+		)
+		(cond 
+			((event claimed?) (return TRUE))
+			((and (& (event type?) userEvent) (user canControl:))
+				(self pragmaFail: (event message?))
+				(event claimed: TRUE)
+			)
+		)
+		(return (event claimed?))
 	)
 
 	(method (pragmaFail &tmp theVerb)
@@ -168,6 +284,46 @@
 				(messager say: N_PRAGFAIL V_COMBINE NULL 1 0 MAIN)
 			)
 		)
+	)
+)
+
+(instance statusPlane of Plane)
+
+(instance statusCode of Code
+	(method (doit roomNum &tmp statusBuf scoreBuf statCast)
+		(if
+			;add rooms where the status line is not shown
+			(not (OneOf roomNum 
+					TITLE SPEED_TEST WHERE_TO DEATH
+				 )
+			)
+		)
+		
+		;get the text from the msg
+		(= statusBuf (String new:))
+		(Message MsgGet MAIN N_STATUSLINE NULL NULL 1 (statusBuf data?))
+		
+		;get the current and maximum scores
+		(= scoreBuf (String new:))
+		(scoreBuf format: statusBuf score possibleScore)
+		
+		;set up the plane
+		(statusPlane
+			priority: (+ (GetHighPlanePri) 1)
+			addCast: (= statCast (Cast new:))
+			setRect: 0 0 319 9
+		)
+		;Now actually display the text
+		((DText new:)
+			font: 1307
+			text: (scoreBuf data?)
+			fore: 23
+			setPri: 500
+			setSize: 700
+			posn: 0 0
+			init: statCast
+		)
+		(UpdatePlane statusPlane)
 	)
 )
 
@@ -195,7 +351,7 @@
 )
 
 
-(instance gameHandsOnCode of Code
+(instance gameHandsOn of Code
 	(method (doit)
 		(user canControl: TRUE canInput: TRUE)
 		(theIconBar enable:
@@ -211,23 +367,39 @@
 		(if (not (theIconBar curInvIcon?))
 			(theIconBar disable: ICON_CURITEM)
 		)
+		(if oldCurIcon
+			(theIconBar
+				curIcon: oldCurIcon
+				highlight: oldCurIcon
+			)
+		)
+		(= oldCurIcon 0)
+		(theGame
+			setCursor: ((theIconBar curIcon?) getCursor:) TRUE
+		)
 	)
 )
 
-(instance gameHandsOffCode of Code
+(instance gameHandsOff of Code
 	(method (doit)
-		(user canControl: FALSE canInput: FALSE)
-		(= disabledIcons NULL)
-		(theIconBar disable:
-			ICON_WALK
-			ICON_LOOK
-			ICON_DO
-			ICON_TALK
-			ICON_CUSTOM
-			ICON_CURITEM
-			ICON_INVENTORY
+		(if (not oldCurIcon)
+			(= oldCurIcon (theIconBar curIcon?))
 		)
-		(theIconBar eachElementDo: #perform checkIcon)
+		(user canControl: FALSE canInput: FALSE)
+		(theGame setCursor: waitCursor)
+		(= disabledIcons NULL)
+		(theIconBar
+			eachElementDo: #perform checkIcon
+			curIcon: (theIconBar at: ICON_CONTROL)	;need this to prevent "Not an Object" errors
+			disable:
+				ICON_WALK
+				ICON_LOOK
+				ICON_DO
+				ICON_TALK
+				ICON_CUSTOM
+				ICON_CURITEM
+				ICON_INVENTORY
+		)
 	)
 )
 
@@ -243,6 +415,34 @@
 		else
 			(super findTalker: who)
 		)
+	)
+)
+
+(instance gameEventFlags of Flags
+	(properties
+		size NUMFLAGS
+	)
+)
+
+(instance theGlobalSound of Sound
+	(properties
+		flags mNOPAUSE
+	)
+)
+(instance musicSound of Sound
+	(properties
+		flags mNOPAUSE
+	)
+)
+(instance soundEffects of Sound
+	(properties
+		flags (| mNOPAUSE mLOAD_AUDIO)
+	)
+)
+(instance pointsSound of Sound
+	(properties
+		number sPoints
+		flags mNOPAUSE
 	)
 )
 
