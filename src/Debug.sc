@@ -66,9 +66,6 @@
 			(keyDown
 				(event claimed: TRUE)
 				(switch (event message?)
-					(ESC
-						(= quit TRUE)
-					)
 					(`@a
 						(= node (cast first:))
 						(while node

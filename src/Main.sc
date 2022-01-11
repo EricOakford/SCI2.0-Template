@@ -142,6 +142,7 @@
 	numVoices				;Number of voices supported by sound driver
 	deathReason				;message to display when calling EgoDead
 	gameFlags				;pointer for Flags object, which only requires one global
+	egoSpeed
 
 )
 
@@ -230,6 +231,7 @@
 		(= ego egoObj)
 		((ScriptID GAME_ICONBAR 0) init:)
 		((ScriptID GAME_INV 0) init:)
+		((ScriptID GAME_CONTROLS 0) init:)
 		
 		;anything not requiring objects in this script is loaded in GAME_INIT.SC
 		((ScriptID GAME_INIT 0) doit:)
@@ -249,6 +251,16 @@
 		(if debugging
 			((ScriptID DEBUG 0) init:)
 		)
+	)
+	
+	(method (showControls &tmp oldCur)
+		(theIconBar hide:)
+		(gameControls showSelf:)	
+	)
+
+	(method (showAbout)
+		((ScriptID GAME_ABOUT 0) doit:)
+		(DisposeScript GAME_ABOUT)
 	)
 	
 	(method (handleEvent event)
@@ -323,6 +335,9 @@
 			posn: 0 0
 			init: statCast
 		)
+		;clean up the strings
+		(statusBuf dispose:)
+		(scoreBuf dispose:)
 		(UpdatePlane statusPlane)
 	)
 )

@@ -12,6 +12,24 @@
 (define vInvItems	900)
 	(define lInvCursors	1)
 
+(define vControlIcons 950)
+	(enum
+		lSaveButton
+		lRestoreButton
+		lAboutButton
+		lHelpButton
+		lVoiceOnButton
+		lVoiceOffButton
+		lTextOnButton
+		lTextOffButton
+		lRestartButton
+		lQuitButton
+		lOKButton
+		lControlFixture
+		lControlBars
+		lTestBar
+	)
+	
 (define vWalkCursor 980)
 (define vLookCursor 981)
 (define vDoCursor	982)
@@ -44,20 +62,5 @@
 	)
 (define vIconCursors	992)
 (define vInvWindow		993)
-
-(define vControlIcons 995)
-	(enum
-		lSliderText
-		lControlFixtures
-		lSaveButton
-		lRestoreButton
-		lRestartButton
-		lQuitButton
-		lAboutButton
-		lHelpButton
-		lOKButton
-		lModeButton
-		lCurrentMode
-	)
 	
 (define vDeathSkull 2000)

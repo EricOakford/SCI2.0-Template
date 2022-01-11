@@ -294,7 +294,7 @@
 	(method (select)
 		(return
 			(if (super select: &rest)
-				;(theGame showControls:)
+				(theGame showControls:)
 				(return TRUE)
 			else
 				(return FALSE)
