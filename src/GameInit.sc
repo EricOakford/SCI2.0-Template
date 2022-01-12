@@ -59,12 +59,15 @@
 		(= myHighlightColor 0)
 		(= userFont USERFONT)
 		(= systemPlane GameWindow)
+		(Print
+			back: 5
+			fore: 0
+		)
 		((= narrator Narrator)
 			font: userFont
 			fore: myTextColor
 			back: myBackColor
 		)
-		(user alterEgo: ego canControl: FALSE canInput: FALSE)
 		(= useSortedFeatures TRUE)
 		(= eatMice 30)
 		
@@ -78,23 +81,16 @@
 		(= howFast (SpeedTest))
 		(= platType (Platform GetPlatType))
 		(= colorDepth (Platform GetColorDepth))
-;;;		(Printf
-;;;			{howFast is %d\n
-;;;			numVoices is %d\n
-;;;			numDACs is %d\n
-;;;			IsHiRes is %d\n
-;;;			platType is %d\n
-;;;			colorDepth is %d
-;;;			}
-;;;			howFast numVoices numDACs (IsHiRes) platType colorDepth
-;;;		)
+		(Printf
+			{howFast is %d\n
+			numVoices is %d\n
+			numDACs is %d\n
+			IsHiRes is %d\n
+			platType is %d\n
+			colorDepth is %d
+			}
+			howFast numVoices numDACs (IsHiRes) platType colorDepth
+		)
 		(theIconBar enable:)
-		;now go to the game
-		(theGame
-			setCursor:	(waitCursor posn: 300 180, yourself:),
-			handsOff:,
-			newRoom:		TESTROOM
-		)		
-		(DisposeScript GAME_INIT)	;don't need this in memory anymore
 	)
 )

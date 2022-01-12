@@ -59,7 +59,6 @@
 		(switch (= state newState)
 			(waitABit
 				(deathMusic number: sDeath play:)
-				(ego hide:)
 				(= cycles 2)
 			)
 			(setItUp
@@ -81,7 +80,7 @@
 			(showMessage
 				(repeat
 					(switch
-						(Print
+						(deathPrint
 							back: 5
 							fore: 0
 							font: userFont
@@ -98,6 +97,7 @@
 						)
 						(2
 							(theGame restart: 1)
+							(break)
 						)
 						(3
 							(theGame quitGame: 1)
@@ -115,3 +115,5 @@
 		flags mNOPAUSE
 	)
 )
+
+(instance deathPrint of Print)

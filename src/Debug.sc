@@ -3,348 +3,253 @@
 (include game.sh)
 (use Main)
 (use Intrface)
-(use DButton)
-(use DText)
-(use Plane)
 (use String)
 (use Print)
-(use Dialog)
 (use Feature)
-(use Ego)
+(use Sound)
 (use File)
-(use Invent)
 (use User)
-(use Actor)
 (use System)
 
 (public
-	debugHandler 0
+	debugRm 0
 )
 
 (local
-	newDButton
-	egoInCast
-	bmpFile
+	local0
+	numBMPs
+	local2
 )
+(instance debugSound of Sound)
 
-(procedure (localproc_0028 param1 param2 &tmp str)
-	(= str (String newWith: 80 {}))
-	(if (> argc 1) (str format: {%d} param2))
-	(return
-		(if (GetInput (str data?) 10 param1)
-			(str asInteger:)
-		else
-			-1
-		)
-	)
-)
-
-(instance debugHandler of Feature
-	(properties
-		y -1
-	)
-	
+(instance debugRm of Feature
 	(method (init)
 		(super init:)
-		(mouseDownHandler addToFront: self)
-		(keyDownHandler addToFront: self)
+		(self y: -1)
+		(mouseDownHandler add: self)
+		(keyDownHandler add: self)
 	)
 	
 	(method (dispose)
 		(mouseDownHandler delete: self)
 		(keyDownHandler delete: self)
-		(sysLogPath dispose:)
 		(super dispose:)
-		(DisposeScript DEBUG)
 	)
 	
 	(method (handleEvent event &tmp
-				str evt node obj i)
-		(= sysLogPath (String new: 1000))
-		(= str (String new:))
+				eventX eventY evt node i
+				bmpFile obj roomNum theAlterEgo)
+		(if (event claimed?) (return))
 		(switch (event type?)
 			(keyDown
 				(event claimed: TRUE)
 				(switch (event message?)
-					(`@a
-						(= node (cast first:))
-						(while node
-							(= obj (NodeValue node))
-							(str
-								format:
-									{name: %s\n
-									class: %s\n
-									view: %d\n
-									loop: %d\n
-									cel: %d\n
-									posn: %d %d %d\n
-									heading: %d\n
-									pri: %d\n
-									signal: $%x\n
-									scaleSignal: $%x\n
-									scaleX: %d\n
-									scaleY: %d\n
-									illBits: $%x\n}
-									(obj name?)
-									((obj -super-?) name?)
-									(obj view?)
-									(obj loop?)
-									(obj cel?)
-									(obj x?)
-									(obj y?)
-									(obj z?)
-									(obj heading?)
-									(obj priority?)
-									(obj signal?)
-									(obj scaleSignal?)
-									(obj scaleX?)
-									(obj scaleY?)
-									(if
-										(or
-											(== (obj -super-?) Actor)
-											(== (obj -super-?) Ego)
-										)
-										(obj illegalBits?)
-									else
-										-1
-									)
-							)
-							(if (not (obj scaleSignal?))
-								(Print
-									addIcon: (obj view?) (obj loop?) (obj cel?) 0 0
-									font: smallFont
-									addText: str (CelWide (obj view?) (obj loop?) (obj cel?)) 0
-									init:
-								)
-							else
-								(Print font: smallFont addText: str 0 0 init:)
-							)
-							(= node (cast next: node))
-						)
-					)
-					(2
-						(= bmpFile (String format: {%03d.BMP} curRoomNum))
-						(if (FileIO FileExists (bmpFile data?))
-							(Printf {%03d.BMP SUCCESSFULLY CREATED} curRoomNum)
-						else
-							(Printf {ERROR CREATING %03d.BMP} curRoomNum)
+					(`?
+						(Prints
+							{ALT-C - show Cast\n
+							ALT-B - capture BMP\n
+							ALT-E - show Ego\n
+							ALT-F - (vacant)\n
+							ALT-G - show/set/clear Flag\n
+							ALT-I - get Inventory Item\n
+							ALT-P - (vacant)\n
+							ALT-R - show Room info\n
+							ALT-S - (vacant)\n
+							ALT-T - teleport\n
+							ALT-U - handsOn\n
+							ALT-X - exit the Game\n
+							CTRL-S - test a sound_}
 						)
 					)
 					(`@b
+						(while
+							(and
+								(< numBMPs 999)
+								(= bmpFile (String format: {%03d.BMP} numBMPs))
+								(FileIO FileExists (bmpFile data?))
+							)
+							(++ numBMPs)
+						)
+						(if (< numBMPs 999)
+							(Printf {Screen saved as\n___%s} (bmpFile data?))
+						else
+							(Prints
+								{Sorry, no can do. How did you get so many files?}
+							)
+						)
 					)
 					(`@c
-						(repeat
-							(if
-								(or
-									(== ((= event (Event new:)) type?) mouseDown)
-									(== (event type?) keyDown)
+						(if (cast size:)
+							(= obj (String newWith: 75 {}))
+							(= i (cast first:))
+							(while i
+								(= node (NodeValue i))
+								(obj
+									format:
+										{class: %s\n
+										name: %s\n
+										view: %d\n
+										loop: %d\n
+										cel: %d\n
+										posn: %d %d %d\n
+										heading: %d\n
+										pri: %d\n
+										signal: $%x\n}
+										((node -super-?) name?)
+										(node name?)
+										(node view?)
+										(node loop?)
+										(node cel?)
+										(node x?)
+										(node y?)
+										(node z?)
+										(node heading?)
+										(node priority?)
+										(node signal?)
 								)
-								(break)
+								(if
+									(not
+										(Print
+											addText: (obj data?)
+											addIcon:
+												(node view?)
+												(node loop?)
+												(node cel?)
+												(+ (Print x?) 80)
+												(+ (Print y?) 80)
+											init:
+										)
+									)
+									(break)
+								)
+								(= i (cast next: i))
 							)
-							(event dispose:)
-						)
-						(event dispose:)
-					)
-					(`@d
-						(if (= debugOn (not debugOn))
-							(Prints {On})
+							(obj dispose:)
 						else
-							(Prints {Off})
+							(Prints {No One Home!})
+							(return)
 						)
 					)
-					(`@f
-						(= i 0)
-						(= i (GetNumber {Flag #:}))
-						(if (Btst i)
-							(Prints {cleared})
-							(Bclr i)
-						else
-							(Prints {set})
-							(Bset i)
+					(`@e
+						(= node
+							(cond 
+								((cast contains: (user alterEgo?)) (user alterEgo?))
+								(else (Prints {no ego!}) (return))
+							)
 						)
-					)
-					(`@g
-						(GetInput str 5 {Variable No.})
-						(if (not (= node (str asInteger:))) (return))
-						(GetInput str 5 {Value})
-						(= [ego node] (str asInteger:))
-					)
-					(`@i
-						(ego get: (GetNumber str))
-					)
-					(`@m
-						(theGame showMem:)
-					)
-					(`@l
-						((ScriptID LOGGER) doit:)
-					)
-					(`@p)
-					(`@q
+						(= obj (String newWith: 75 {}))
+						(obj
+							format:
+								{name: %s\nview: %d\nloop: %d\ncel: %d\nposn: %d %d %d\nheading: %d\npri: %d\nsignal: $%x\nscript: %s\n}
+								(node name?)
+								(node view?)
+								(node loop?)
+								(node cel?)
+								(node x?)
+								(node y?)
+								(node z?)
+								(node heading?)
+								(node priority?)
+								(node signal?)
+								(if (node script?)
+									((node script?) name?)
+								else
+									{..none..}
+								)
+						)
 						(Print
-							font: smallFont
-							addTextF: {Cur X: %d,Y: %d} (event x?) (event y?)
+							addText: (obj data?)
+							addIcon:
+								(node view?)
+								(node loop?)
+								(node cel?)
+								(+ (Print x?) 80)
+								(+ (Print y?) 80)
 							init:
 						)
+						(obj dispose:)
+					)
+					(`@f
+					)
+					(`@g
+						(= obj (String newWith: 75 {}))
+						(Print
+							font: userFont
+							y: 100
+							addText: {Flag num?}
+							addEdit: obj 5 50
+							init:
+						)
+						(= i (obj asInteger:))
+						(obj dispose:)
+						(switch
+							(Print
+								font: userFont
+								y: 50
+								addText: (if (Btst i)
+									{flag is SET}
+								else
+									{flag is CLEARED}
+								)
+								addButton: 1 { set_} 0 12
+								addButton: 2 {clear} 0 26
+								addButton: -1 {cancel} 0 40
+								init:
+							)
+							(1 (Bset i))
+							(2 (Bclr i))
+						)
+					)
+					(`@i
+					)
+					(`@p
 					)
 					(`@r
-						(str
-							format:
-								{Current Room\n
-								name: %s\n
-								script: %s\n
-								horizon: %d\n
-								vanishingX: %d\n
-								vanishingY: %d\n
-								picAngle: %d\n
-								north: %d\n
-								south: %d\n
-								east: %d\n
-								west: %d\n
-								style: %d\n
-								curPic: %d}
-								(curRoom name?)
-								(if (curRoom script?)
-									((curRoom script?) name?)
-								else
-									{none}
-								)
-								(curRoom horizon?)
-								(curRoom vanishingX?)
-								(curRoom vanishingY?)
-								(curRoom picAngle?)
-								(curRoom north?)
-								(curRoom south?)
-								(curRoom east?)
-								(curRoom west?)
-								(curRoom style?)
-								(curRoom curPic?)
-						)
-						(Print font: smallFont addText: str 0 0 init:)
-					)
-					(`@t
-						(if (> (= i (GetNumber {Which room number?})) 0)
-							(curRoom newRoom: i)
+						(Printf
+							{name: %s\n
+							number: %d\n
+							picture: %d\n
+							style: %d\n
+							horizon: %d\n
+							north: %d\n
+							south: %d\n
+							east: %d\n
+							west: %d\n
+							script: %s_}
+							(curRoom name?)
+							curRoomNum
+							(curRoom picture?)
+							(curRoom style?)
+							(curRoom horizon?)
+							(curRoom north?)
+							(curRoom south?)
+							(curRoom east?)
+							(curRoom west?)
+							(if (curRoom script?)
+								((curRoom script?) name?)
+							else
+								{..none..}
+							)
+							78
+							120
 						)
 					)
 					(`@s
-						(= node (cast first:))
-						(while node
-							(= obj (NodeValue node))
-							(str
-								format:
-									{Updating cast members\n
-									name: %s\n
-									class: %s\n
-									view: %d\n
-									loop: %d\n
-									cel: %d\n
-									posn: %d %d %d\n
-									heading: %d\n
-									pri: %d\n
-									signal: $%x\n
-									illBits: $%x\n}
-									(obj name?)
-									((obj -super-?) name?)
-									(obj view?)
-									(obj loop?)
-									(obj cel?)
-									(obj x?)
-									(obj y?)
-									(obj z?)
-									(obj heading?)
-									(obj priority?)
-									(obj signal?)
-									(if
-										(or
-											(== (obj -super-?) Actor)
-											(== (obj -super-?) Ego)
-										)
-										(obj illegalBits?)
-									else
-										-1
-									)
-							)
-							(if (not (obj scaleSignal?))
-								(Print
-									addIcon: (obj view?) (obj loop?) (obj cel?) 0 0
-									font: smallFont
-									addText: str (CelWide (obj view?) (obj loop?) (obj cel?)) 0
-									init:
-								)
-							else
-								(Print font: smallFont addText: str 0 0 init:)
-							)
-							(= node (cast next: node))
-						)
+					)
+					(`^s
+						(= i (GetNumber {setLoop?}))
+						(= node (GetNumber {which sound number?}))
+						(debugSound setLoop: i number: node play:)
+					)
+					(`@t
+						(= roomNum (GetNumber {Which room number?}))
+						(curRoom newRoom: roomNum)
 					)
 					(`@u
 						(theGame handsOn:)
 					)
-					(`@v)
 					(`@x
 						(= quit TRUE)
-					)
-					(`@y
-						(Print
-							font: smallFont
-							addTextF:
-								{vanishing x: %d,y: %d}
-								(curRoom vanishingX?)
-								(curRoom vanishingY?)
-							init:
-						)
-						(= node (localproc_0028 {vanishingX:}))
-						(if (OneOf node -1 0)
-						else
-							(curRoom vanishingX: node)
-						)
-						(= node (localproc_0028 {vanishingY:}))
-						(if (OneOf node -1 0)
-						else
-							(curRoom vanishingY: node)
-						)
-						(Print
-							font: smallFont
-							addTextF:
-								{vanishing x: %d,y: %d}
-								(curRoom vanishingX?)
-								(curRoom vanishingY?)
-							init:
-						)
-					)
-					(`@z
-						(= evt (Event new:))
-						((user alterEgo?)
-							posn: (evt x?) (- (evt y?) 10)
-							setMotion: 0
-						)
-						(evt dispose:)
-					)
-					(`@h
-						(Print
-							font: smallFont
-							addText:
-								{ALT-A show Cast\n
-								ALT-B (vacant)\n
-								ALT-C Control map\n
-								ALT-D DebugOn toggle\n
-								ALT-F Flag set/clr\n
-								ALT-G Global set\n
-								ALT-I Inv items\n
-								ALT-L Log file\n
-								ALT-M Memory\n
-								ALT-P Priority map\n
-								ALT-Q show Cursor Coords\n
-								ALT-R Room info\n
-								ALT-S Updating cast elements\n
-								ALT-T Teleport\n
-								ALT-U return User control\n
-								ALT-V Visual map\n
-								ALT-W (vacant)\n
-								ALT-Y Vanishing point adj\n
-								ALT-Z position ego at cursor}
-							init:
-						)
 					)
 					(else
 						(event claimed: FALSE)
@@ -352,19 +257,57 @@
 				)
 			)
 			(mouseDown
-				(if (== (event modifiers?) altDown)
-					(event claimed: TRUE)
-					(while (!= mouseUp ((= evt (Event new:)) type?))
-						((user alterEgo?)
-							posn: (evt x?) (- (evt y?) 10)
-							setMotion: 0
+				(switch (event modifiers?)
+					(13 0)
+					(14 0)
+					(12
+						(event claimed: TRUE)
+						(event globalize:)
+						(= eventX (event x?))
+						(= eventY (event y?))
+						(event localize: (cast plane?))
+						(Printf
+							{global: %d/%d\n local: %d/%d}
+							eventX
+							eventY
+							(event x?)
+							(event y?)
+							75
+							160
+							10
+							42
+							999
+						)
+					)
+					((| ctrlDown shiftRight)
+						(event type: keyDown message: 4864)
+						(self handleEvent: event)
+					)
+					((| ctrlDown shiftLeft)
+						(event type: keyDown message: 4608)
+						(self handleEvent: event)
+					)
+					(9 0)
+					(10 0)
+					(shiftRight 0)
+					(shiftLeft 0)
+					(ctrlDown 0)
+					(altDown
+						(event claimed: TRUE)
+						(= theAlterEgo (User alterEgo?))
+						(ego setMotion: 0)
+						(while (!= ((= evt (Event new:)) type?) 2)
+							(evt localize: (cast plane?))
+							(theAlterEgo x: (evt x?) y: (evt y?))
+							(if (theAlterEgo scaler?) ((theAlterEgo scaler?) doit:))
+							(UpdateScreenItem theAlterEgo)
+							(FrameOut)
+							(evt dispose:)
 						)
 						(evt dispose:)
 					)
-					(evt dispose:)
 				)
 			)
 		)
-		(str dispose:)
 	)
 )

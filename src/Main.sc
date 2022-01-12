@@ -131,22 +131,26 @@
 		global98
 	lastSysGlobal
 	;globals > 99 are for game use
+	
+	;these globals are retained at restart
+	statusLine				;pointer for status line code
+	soundFx					;sound effect being played
+	theMusic				;music object, current playing music
+	globalSound				;ambient sound
+	gameFlags				;pointer for Flags object, which only requires one global
+	disabledIcons
+	oldCurIcon
+	;end globals to retain at restart
+	
 	myTextColor				;color of text in message boxes
 	myBackColor				;color of message boxes
 	myHighlightColor		;color of icon highlight
 	myLowlightColor			;color of icon lowlight
 	debugging				;debug mode enabled
-	statusLine				;pointer for status line code
-	soundFx					;sound effect being played
-	theMusic				;music object, current playing music
-	globalSound				;ambient sound
-	disabledIcons
-	oldCurIcon
 	scoreFont				;font for displaying the score in the control panel
 	numDACs					;Number of voices supported by digital audio driver
 	numVoices				;Number of voices supported by sound driver
 	deathReason				;message to display when calling EgoDead
-	gameFlags				;pointer for Flags object, which only requires one global
 )
 
 ;These will be replaced with macro defines once those are supported
@@ -268,12 +272,13 @@
 
 		;load up the ego, icon bar, inventory, and control panel
 		(= ego egoObj)
+		(user alterEgo: ego canControl: FALSE canInput: FALSE)
 		((ScriptID GAME_ICONBAR 0) init:)
 		((ScriptID GAME_INV 0) init:)
 		((ScriptID GAME_CONTROLS 0) init:)
 		
-		;anything not requiring objects in this script is loaded in GAME_INIT.SC
-		((ScriptID GAME_INIT 0) doit:)
+		;go to the restart room
+		(self newRoom: GAME_RESTART)
 	)
 
 	(method (startRoom roomNum)
@@ -349,7 +354,7 @@
 	
 	(method (showControls &tmp oldCur)
 		(theIconBar hide:)
-		(gameControls showSelf:)	
+		(gameControls showSelf:)
 	)
 	
 	(method (solvePuzzle pValue pFlag)
@@ -374,9 +379,15 @@
 	)
 	
 	(method (restart)
-		;NOTE: Will need to re-implement restarting the game
-		(Prints {Restarting with the kernel not supported with SCI32})
-		(super restart:)
+		;if a parameter is given, skip the dialog and quit immediately		
+		(if argc
+			(curRoom newRoom: GAME_RESTART)
+		else
+			;the game's quit dialog
+			(if (YesNoDialog N_RESTART)
+				(curRoom newRoom: GAME_RESTART)
+			)
+		)
 	)
 
 	(method (quitGame)
