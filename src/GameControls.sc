@@ -166,7 +166,7 @@
 				(iconRestore theObj: theGame selector: #restore yourself:)
 				(iconSave theObj: theGame selector: #save yourself:)
 ;;;				(detailBar theObj: theGame selector: #detailLevel yourself:)
-				(speedBar theObj: ego selector: #setSpeed yourself:)
+;;;				(speedBar theObj: ego selector: #setSpeed yourself:)
 ;;;				soundBar
 ;;;				musicBar
 ;;;				textBar
@@ -182,8 +182,8 @@
 			back: 3
 			addCast: controlCast
 		)
-;;;		(controlCel init: controlCast)
-		(testBar init: controlCast)
+		(controlCel init: controlCast)
+;;;		(testBar init: controlCast)
 ;;;		(testBar1 init: controlCast)
 ;;;		(testBar2 init: controlCast)
 ;;;		(testBar3 init: controlCast)

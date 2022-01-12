@@ -67,7 +67,6 @@
 		)
 		(super init:)
 		(self setPlane: vInvWindow 0 0)
-		(ego get: iMoney)
 	)
 	
 	(method (setPlane v l c)

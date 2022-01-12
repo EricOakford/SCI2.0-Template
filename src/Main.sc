@@ -11,28 +11,33 @@
 
 (script# MAIN)
 (include game.sh) (include "0.shm")
-(use Plane)
-(use Game)
+(use GameEgo)
+(use Print)
+(use Dialog)
+(use Talker)
 (use Messager)
+(use Polygon)
+(use PolyPath)
+(use StopWalk)
+(use IconBar)
+(use Plane)
 (use Flags)
 (use Grooper)
-(use Talker)
 (use Sound)
+(use User)
+(use Game)
+(use System)
 (use String)
 (use DText)
-(use IconBar)
-(use GameEgo)
-(use StopWalk)
-(use Ego)
-(use Actor)
-(use System)
 
 (public
 	SCI2 0
 	Bset 1
 	Bclr 2
 	Btst 3
-	EgoDead 4
+	Face 4
+	EgoDead 5
+	YesNoDialog 6
 
 )
 
@@ -142,8 +147,6 @@
 	numVoices				;Number of voices supported by sound driver
 	deathReason				;message to display when calling EgoDead
 	gameFlags				;pointer for Flags object, which only requires one global
-	egoSpeed
-
 )
 
 ;These will be replaced with macro defines once those are supported
@@ -167,6 +170,24 @@
 	(gameFlags test: flagEnum)
 )
 
+(procedure (Face actor1 actor2 both whoToCue &tmp ang1To2 theX theY i)
+	;This makes one actor face another.
+	(= i 0)
+	(if (not (> argc 3))
+		(= theX (actor2 x?))
+		(= theY (actor2 y?))
+		(if (== argc 3) (= i both))
+	else
+		(= theX actor2)
+		(= theY both)
+		(if (== argc 4) (= i whoToCue))
+	)
+	(= ang1To2
+		(GetAngle (actor1 x?) (actor1 y?) theX theY)
+	)
+	(actor1 setHeading: ang1To2 i)
+)
+
 (procedure (EgoDead theReason)
 	;This procedure handles when ego dies. It closely matches that of SQ4, SQ5 and KQ6.
 	;If a specific message is not given, the game will use a default message.
@@ -178,9 +199,27 @@
 	(curRoom newRoom: DEATH)
 )
 
+(procedure (YesNoDialog question &tmp oldCur)
+	;this brings up a "yes or no" dialog choice.
+	(= oldCur ((theIconBar curIcon?) getCursor:))
+	(theGame setCursor: normalCursor)
+	(return
+		(Print
+			font:		userFont
+			width:		100
+			mode:		teJustCenter
+			addText:	question NULL NULL 1 0 0 MAIN
+			addButton:	TRUE N_YESORNO NULL NULL 1 0 25 MAIN
+			addButton:	FALSE N_YESORNO NULL NULL 2 75 25 MAIN
+			init:
+		)
+	)
+	(theGame setCursor: oldCur)
+)
 
 (instance egoObj of GameEgo
 	(properties
+		name {ego}
 		view vEgo
 	)
 )
@@ -223,9 +262,9 @@
 		((= gameFlags gameEventFlags)
 			init:
 		)
+		((= altPolyList (List new:)) name: {altPolys} add:)
 		(statusPlane init:)
 		(= statusLine statusCode)
-		((= altPolyList (List new:)) name: {altPolys} add:)
 
 		;load up the ego, icon bar, inventory, and control panel
 		(= ego egoObj)
@@ -237,7 +276,11 @@
 		((ScriptID GAME_INIT 0) doit:)
 	)
 
-	(method (startRoom roomNum)	
+	(method (startRoom roomNum)
+		(if debugging
+			((ScriptID DEBUG 0) init:)
+		)
+		(statusLine doit: roomNum)
 		(super startRoom: roomNum)
 		(if
 			(and
@@ -247,9 +290,60 @@
 			)
 			(ego setLooper: stopGroop)
 		)
-		(statusCode doit: roomNum)
-		(if debugging
-			((ScriptID DEBUG 0) init:)
+	)
+
+	(method (handleEvent event)
+		(super handleEvent: event)
+		(if (event claimed?) (return TRUE))
+		(return
+			(switch (event type?)
+				(keyDown
+					(switch (event message?)
+						(TAB
+							(if (not (& ((theIconBar at: ICON_INVENTORY) signal?) DISABLED))
+								(ego showInv:)
+								(event claimed: TRUE)
+							)
+						)
+						(`^q
+							(theGame quitGame:)
+							(event claimed: TRUE)
+						)
+						(`^c
+							(if (not (& ((theIconBar at: ICON_CONTROL) signal?) DISABLED))
+								(theGame showControls:)
+								(event claimed: TRUE)
+							)
+						)
+						(`#2
+							(cond 
+								((theGame masterVolume:)
+									(theGame masterVolume: 0)
+								)
+								((> numVoices 1)
+									(theGame masterVolume: 15)
+								)
+								(else
+									(theGame masterVolume: 1)
+								)
+							)
+							(event claimed: TRUE)
+						)
+						(`#5
+							(if (not (& ((theIconBar at: ICON_CONTROL) signal?) DISABLED))
+								(theGame save:)
+								(event claimed: TRUE)
+							)
+						)
+						(`#6
+							(if (not (& ((theIconBar at: ICON_CONTROL) signal?) DISABLED))
+								(theGame restore:)
+								(event claimed: TRUE)
+							)
+						)
+					)
+				)
+			)
 		)
 	)
 	
@@ -257,35 +351,46 @@
 		(theIconBar hide:)
 		(gameControls showSelf:)	
 	)
+	
+	(method (solvePuzzle pValue pFlag)
+		;Adds an amount to the player's current score.
+		;It checks if a certain flag is set so that the points are awarded only once.
+		(if (and (> argc 1) (gameFlags test: pFlag))
+			(return)
+		)
+		(if pValue
+			(+= score pValue)
+			(if (and (> argc 1) pFlag)
+				(gameFlags set: pFlag)
+				(statusLine doit: curRoomNum)
+				(pointsSound play:)
+			)
+		)
+	)
 
 	(method (showAbout)
 		((ScriptID GAME_ABOUT 0) doit:)
 		(DisposeScript GAME_ABOUT)
 	)
 	
-	(method (handleEvent event)
-		(if (== (event type?) keyDown)
-			(switch (event message?)
-				(`#5
-					(theGame save:)
-					(event claimed: TRUE)
-				)
-				(`#7
-					(theGame restore:)
-					(event claimed: TRUE)
-				)
-			)
-		)
-		(cond 
-			((event claimed?) (return TRUE))
-			((and (& (event type?) userEvent) (user canControl:))
-				(self pragmaFail: (event message?))
-				(event claimed: TRUE)
-			)
-		)
-		(return (event claimed?))
+	(method (restart)
+		;NOTE: Will need to re-implement restarting the game
+		(Prints {Restarting with the kernel not supported with SCI32})
+		(super restart:)
 	)
 
+	(method (quitGame)
+		;if a parameter is given, skip the dialog and quit immediately		
+		(if argc
+			(super quitGame:)
+		else
+			;the game's quit dialog
+			(if (YesNoDialog N_QUITGAME)
+				(super quitGame:)
+			)
+		)
+	)
+	
 	(method (pragmaFail &tmp theVerb)
 		;nobody responds to user input
 		(if (user canInput:)
@@ -342,14 +447,19 @@
 	)
 )
 
-(instance gameApproachCode of Code
-	(method (doit theVerb)
-		(switch theVerb
-			(V_LOOK $0001)
-			(V_TALK $0002)
-			(V_WALK $0004)
-			(V_DO $0008)
-			(else  $8000)
+(instance gameMessager of Messager
+	(method (findTalker who &tmp theTalker)
+		(if
+			(= theTalker
+				(switch who
+					;Add the talkers here, using the defines you set in the message editor
+					;from TALKERS.SH
+					(else  narrator)
+				)
+			)
+			(return)
+		else
+			(super findTalker: who)
 		)
 	)
 )
@@ -365,6 +475,40 @@
 	)
 )
 
+(instance gameApproachCode of Code
+	(method (doit theVerb)
+		(switch theVerb
+			(V_LOOK $0001)
+			(V_TALK $0002)
+			(V_WALK $0004)
+			(V_DO $0008)
+			(else  $8000)
+		)
+	)
+)
+
+(instance gameHandsOff of Code
+	(method (doit)
+		(if (not oldCurIcon)
+			(= oldCurIcon (theIconBar curIcon?))
+		)
+		(user canControl: FALSE canInput: FALSE)
+		(ego setMotion: 0)
+		(= disabledIcons NULL)
+		(theIconBar
+			eachElementDo: #perform checkIcon
+			curIcon: (theIconBar at: ICON_CONTROL)
+			disable:
+				ICON_WALK
+				ICON_LOOK
+				ICON_DO
+				ICON_TALK
+				ICON_CURITEM
+				ICON_INVENTORY
+		)
+		(theGame setCursor: waitCursor)
+	)
+)
 
 (instance gameHandsOn of Code
 	(method (doit)
@@ -376,60 +520,26 @@
 			ICON_TALK
 			ICON_CURITEM
 			ICON_INVENTORY
-			ICON_CONTROL
-			ICON_HELP
+		)
+		(if (not (curRoom inset:))
+			(theIconBar enable: ICON_CONTROL)
 		)
 		(if (not (theIconBar curInvIcon?))
 			(theIconBar disable: ICON_CURITEM)
 		)
 		(if oldCurIcon
-			(theIconBar
-				curIcon: oldCurIcon
-				highlight: oldCurIcon
+			(theIconBar curIcon: oldCurIcon)
+			(theGame setCursor: (oldCurIcon getCursor:))
+			(if
+				(and
+					(== (theIconBar curIcon?) (theIconBar at: ICON_CURITEM))
+					(not (theIconBar curInvIcon?))
+				)
+				(theIconBar advanceCurIcon:)
 			)
 		)
 		(= oldCurIcon 0)
-		(theGame
-			setCursor: ((theIconBar curIcon?) getCursor:) TRUE
-		)
-	)
-)
-
-(instance gameHandsOff of Code
-	(method (doit)
-		(if (not oldCurIcon)
-			(= oldCurIcon (theIconBar curIcon?))
-		)
-		(user canControl: FALSE canInput: FALSE)
-		(theGame setCursor: waitCursor)
-		(= disabledIcons NULL)
-		(theIconBar
-			eachElementDo: #perform checkIcon
-			curIcon: (theIconBar at: ICON_CONTROL)	;need this to prevent "Not an Object" errors
-			disable:
-				ICON_WALK
-				ICON_LOOK
-				ICON_DO
-				ICON_TALK
-				ICON_CUSTOM
-				ICON_CURITEM
-				ICON_INVENTORY
-		)
-	)
-)
-
-(instance gameMessager of Messager
-	(method (findTalker who &tmp theTalker)
-		(if
-			(= theTalker
-				(switch who
-					(else  narrator)
-				)
-			)
-			(return)
-		else
-			(super findTalker: who)
-		)
+		(theGame setCursor: ((theIconBar curIcon?) getCursor:) TRUE)
 	)
 )
 
@@ -460,7 +570,6 @@
 		flags mNOPAUSE
 	)
 )
-
 
 (instance checkIcon of Code
 	(method (doit theIcon)

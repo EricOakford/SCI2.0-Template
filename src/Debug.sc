@@ -222,6 +222,9 @@
 						(Print font: smallFont addText: str 0 0 init:)
 					)
 					(`@t
+						(if (> (= i (GetNumber {Which room number?})) 0)
+							(curRoom newRoom: i)
+						)
 					)
 					(`@s
 						(= node (cast first:))

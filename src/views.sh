@@ -7,7 +7,7 @@
 ;********************************************************************
 
 (define	vEgo		0)
-(define vBox		1)
+(define vEgoStand	1)
 (define vTestBlock	4)
 (define vInvItems	900)
 	(define lInvCursors	1)

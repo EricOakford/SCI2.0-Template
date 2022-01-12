@@ -30,6 +30,7 @@
 			;These correspond to ICON_*** in game.sh
 				iconWalk iconLook iconDo iconTalk iconCustom
 				iconUseIt iconInventory iconControlPanel iconHelp
+			disable: ICON_CUSTOM
 			curIcon: iconWalk	;gotta start somewhere
 			useIconItem: iconUseIt
 			helpIconItem: iconHelp

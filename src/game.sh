@@ -26,7 +26,6 @@
 (define GAME_ICONBAR	11)
 (define GAME_INIT		12)
 (define WHERE_TO		13)
-(define DISPOSE_CODE	14)
 
 ;
 ; Actual rooms

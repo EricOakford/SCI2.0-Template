@@ -10,27 +10,29 @@
 (include game.sh) (include "0.shm")
 (use Main)
 (use GameEgo)
-(use GameIconBar)
 (use GameWindow)
-(use SpeedTst)
-(use String)
+(use GameIconBar)
 (use Print)
 (use GameInv)
+(use Plane)
 (use Talker)
 (use User)
 (use System)
+(use SpeedTst)
+(use String)
+
+(local
+	platType
+	colorDepth
+	quitStr
+)
 
 (public
 	GameInitCode 0
 )
 
-(local
-	platType
-	colorDepth
-)
-
 (instance GameInitCode of Code	
-	(method (doit &tmp quitStr)
+	(method (doit)
 		;When you quit the game, a random message will appear at the DOS prompt.
 		;Customize these messages in the message editor as you see fit.
 		(= quitStr (String new:))
@@ -69,6 +71,7 @@
 		(= msgType TEXT_MSG)		
 		(= scoreFont 9)
 		(= possibleScore 999)
+		(= score 0)
 		(= numVoices (DoSound SndNumVoices))
 		(= numDACs (DoSound SndNumDACs))
 		(= debugging TRUE)	;Set this to FALSE to disable the debug features
