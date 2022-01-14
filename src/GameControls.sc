@@ -157,14 +157,44 @@
 		(self
 			add:
 				iconExit
-				(iconVoice theObj: iconVoice selector: #doit yourself:)
-				(iconText theObj: iconText selector: #doit yourself:)
-				(iconAbout theObj: theGame selector: #showAbout yourself:)
+				;comment the voice and text buttons out
+				; if you do not intend to have speech in your game
+				(iconVoice
+					theObj: iconVoice
+					selector: #doit
+					yourself:
+				)
+				(iconText
+					theObj: iconText
+					selector: #doit
+					yourself:
+				)
+				(iconAbout
+					theObj: theGame
+					selector: #showAbout
+					yourself:
+				)
 				iconHelp
-				(iconQuit theObj: theGame selector: #quitGame yourself:)
-				(iconRestart theObj: theGame selector: #restart yourself:)
-				(iconRestore theObj: theGame selector: #restore yourself:)
-				(iconSave theObj: theGame selector: #save yourself:)
+				(iconQuit
+					theObj: theGame
+					selector: #quitGame
+					yourself:
+				)
+				(iconRestart
+					theObj: theGame
+					selector: #restart
+					yourself:
+				)
+				(iconRestore
+					theObj: theGame
+					selector: #restore
+					yourself:
+				)
+				(iconSave
+					theObj: theGame
+					selector: #save
+					yourself:
+				)
 ;;;				(detailBar theObj: theGame selector: #detailLevel yourself:)
 ;;;				(speedBar theObj: ego selector: #setSpeed yourself:)
 ;;;				soundBar
@@ -209,10 +239,10 @@
 
 (instance iconText of ControlIcon
 	(properties
-		noun 32
+		noun N_TEXT
 		x 44
 		y 99
-		signal $0183
+		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		mainView vControlIcons
 		mainLoop lTextOffButton
 		helpVerb V_HELP
@@ -247,10 +277,10 @@
 
 (instance iconVoice of ControlIcon
 	(properties
-		noun 31
+		noun N_VOICE
 		x 67
 		y 99
-		signal $0183
+		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lVoiceOffButton
@@ -289,7 +319,7 @@
 		noun N_ABOUT
 		x 120
 		y 22
-		signal $01c1
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY)
 		message 0
 		mainView vControlIcons
 		mainLoop lAboutButton
@@ -302,7 +332,7 @@
 		noun N_HELP
 		x 120
 		y 70
-		signal $0183
+		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message V_HELP
 		mainView vControlIcons
 		mainLoop lHelpButton
@@ -318,7 +348,7 @@
 		noun N_OK
 		x 120
 		y 102
-		signal $01c3
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lOKButton
@@ -335,7 +365,7 @@
 		noun N_QUIT
 		x 120
 		y 6
-		signal $01c3
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lQuitButton
@@ -348,7 +378,7 @@
 		noun N_RESTART
 		x 120
 		y 86
-		signal $01c3
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lRestartButton
@@ -361,7 +391,7 @@
 		noun N_RESTORE
 		x 120
 		y 38
-		signal $01c3
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lRestoreButton
@@ -374,7 +404,7 @@
 		noun N_SAVE
 		x 120
 		y 54
-		signal $01c3
+		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
 		mainView vControlIcons
 		mainLoop lSaveButton

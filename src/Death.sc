@@ -41,7 +41,7 @@
 
 (instance deathRoom of Room
 	(properties
-		picture 99
+		picture pSpeedTest
 	)
 	
 	(method (init)

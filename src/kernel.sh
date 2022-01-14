@@ -9,6 +9,7 @@
 ;;;;  [] = optional
 ;;;;  () = return value
 ;;;;
+;;;;	NOTE: This represents later SCI2.1.
 
 
 (define  kernel   $ffff)
@@ -611,48 +612,4 @@
 		(define MB_DEFBUTTON1		  $0000)
 		(define MB_DEFBUTTON2		  $0100)
 		(define MB_DEFBUTTON3		  $0200)
-;	NewRoom				kernel	142
-;	PreloadResource	kernel	143
-;	Priority				kernel	144
-;	MorphOn				kernel	145
-;	PlayVMD				kernel	146
-      (enum
-         VMD_OPEN 
-         VMD_PUT 
-         VMD_PLAY 
-         VMD_STOP 
-         VMD_PAUSE 
-         VMD_RESUME			;5 
-         VMD_CLOSE 
-         VMD_SETPALETTE
-			VMD_GET_LENGTH
-			VMD_GET_POSITION
-			VMD_GET_STATUS		;10
-			VMD_CUE
-			VMD_SEEK
-			VMD_GET_SKIPPED_FRAMES	
-			VMD_WAIT_EVENT
-			VMD_PUT_DOUBLED	;15
-			VMD_SHOW_CURSOR
-			VMD_START_BLOB
-			VMD_STOP_BLOBS
-			VMD_ADD_BLOB
-			VMD_DELETE_BLOB	;20	
-			VMD_BLACK
-      )
-;	SetHotRectangles			kernel	147
-;	MulDiv						kernel	148
-;	GetSierraProfileInt		kernel	149
-;	GetSierraProfileString	kernel	150
-;	SetWindowsOption			kernel	151	; pass enum below
-;	GetWindowsOption			kernel	152	; pass enum below
-		(enum
-			WinTitleBar	 ; pass FALSE or TRUE to set
-		)
-;	WinDLL						kernel	153	; enum name dataBlock
-		(enum
-			LoadDLL
-			FreeDLL
-			CallDLL
-		)
 ;)

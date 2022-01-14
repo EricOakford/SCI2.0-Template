@@ -18,7 +18,7 @@
 (instance rm110 of Room
 	(properties
 		picture scriptNumber
-		style SHOW_FADE_IN
+		style SHOW_IRIS_IN
 		horizon 50
 		vanishingX 130
 		vanishingY 50

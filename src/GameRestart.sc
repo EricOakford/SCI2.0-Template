@@ -18,11 +18,13 @@
 
 (local
 	i
+	nextRoom
 )
 
 (instance restartRoom of Room
 	(properties
-		picture 99
+		picture pSpeedTest
+		style SHOW_IRIS_OUT
 	)
 	
 	(method (init)
@@ -38,7 +40,6 @@
 
 (enum
 	clearEverything
-	reInit
 	startTheGame
 )
 
@@ -81,16 +82,14 @@
 						(= [ego i] 0)
 					)
 				)
-				(= cycles 2)
-			)
-			(reInit
 				;run the game initialization code again
 				((ScriptID GAME_INIT 0) doit:)
 				(DisposeScript GAME_INIT)
 				(= cycles 2)
 			)
 			(startTheGame
-				(curRoom newRoom: TESTROOM)
+				(= nextRoom (if debugging WHERE_TO else TITLE))
+				(curRoom newRoom: nextRoom)
 			)
 		)
 	)

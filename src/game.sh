@@ -14,9 +14,9 @@
 
 (define	MAIN			0)
 (define GAME_WINDOW		1)
-(define	DODISP			2)
+(define STATUS_LINE		2)
 (define	GAME_ROOM		3)
-(define SPEED_TEST		4)
+(define MOVIE			4)
 (define GAME_CONTROLS	5)
 (define GAME_INV		6)
 (define GAME_EGO		7)

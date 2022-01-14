@@ -27,8 +27,6 @@
 (use User)
 (use Game)
 (use System)
-(use String)
-(use DText)
 
 (public
 	SCI2 0
@@ -133,7 +131,7 @@
 	;globals > 99 are for game use
 	
 	;these globals are retained at restart
-	statusLine				;pointer for status line code
+	statusLineCode			;pointer for status line code
 	soundFx					;sound effect being played
 	theMusic				;music object, current playing music
 	globalSound				;ambient sound
@@ -262,20 +260,19 @@
 		(= approachCode gameApproachCode)
 		(= handsOffCode gameHandsOff)
 		(= handsOnCode gameHandsOn)
-		(= statusLine statusCode)
 		((= gameFlags gameEventFlags)
 			init:
 		)
 		((= altPolyList (List new:)) name: {altPolys} add:)
-		(statusPlane init:)
-		(= statusLine statusCode)
 
-		;load up the ego, icon bar, inventory, and control panel
+		;load up the ego, icon bar, inventory, control panel, and status line
 		(= ego egoObj)
 		(user alterEgo: ego canControl: FALSE canInput: FALSE)
 		((ScriptID GAME_ICONBAR 0) init:)
 		((ScriptID GAME_INV 0) init:)
 		((ScriptID GAME_CONTROLS 0) init:)
+		((ScriptID STATUS_LINE 0) init:)
+		(= statusLineCode (ScriptID STATUS_LINE 1))
 		
 		;go to the restart room
 		(self newRoom: GAME_RESTART)
@@ -285,7 +282,7 @@
 		(if debugging
 			((ScriptID DEBUG 0) init:)
 		)
-		(statusLine doit: roomNum)
+		(statusLineCode doit: roomNum)
 		(super startRoom: roomNum)
 		(if
 			(and
@@ -367,7 +364,7 @@
 			(+= score pValue)
 			(if (and (> argc 1) pFlag)
 				(gameFlags set: pFlag)
-				(statusLine doit: curRoomNum)
+				(statusLineCode doit: curRoomNum)
 				(pointsSound play:)
 			)
 		)
@@ -412,49 +409,6 @@
 				(messager say: N_PRAGFAIL V_COMBINE NULL 1 0 MAIN)
 			)
 		)
-	)
-)
-
-(instance statusPlane of Plane)
-
-(instance statusCode of Code
-	(method (doit roomNum &tmp statusBuf scoreBuf statCast)
-		(if
-			;add rooms where the status line is not shown
-			(not (OneOf roomNum 
-					TITLE SPEED_TEST WHERE_TO DEATH
-				 )
-			)
-		)
-		
-		;get the text from the msg
-		(= statusBuf (String new:))
-		(Message MsgGet MAIN N_STATUSLINE NULL NULL 1 (statusBuf data?))
-		
-		;get the current and maximum scores
-		(= scoreBuf (String new:))
-		(scoreBuf format: statusBuf score possibleScore)
-		
-		;set up the plane
-		(statusPlane
-			priority: (+ (GetHighPlanePri) 1)
-			addCast: (= statCast (Cast new:))
-			setRect: 0 0 319 9
-		)
-		;Now actually display the text
-		((DText new:)
-			font: 1307
-			text: (scoreBuf data?)
-			fore: 23
-			setPri: 500
-			setSize: 700
-			posn: 0 0
-			init: statCast
-		)
-		;clean up the strings
-		(statusBuf dispose:)
-		(scoreBuf dispose:)
-		(UpdatePlane statusPlane)
 	)
 )
 

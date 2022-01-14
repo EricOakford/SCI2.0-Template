@@ -185,7 +185,6 @@
 (define	RES_SYNC36		$94)
 (define  RES_TRANS		$95)
 (define  RES_ROBOT		$96)
-(define  RES_VMD			$97)
 
 ;Virtual bitmap ID's
 (define	VMAP		1)

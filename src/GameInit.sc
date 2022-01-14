@@ -71,7 +71,7 @@
 		(= useSortedFeatures TRUE)
 		(= eatMice 30)
 		
-		(= msgType TEXT_MSG)		
+		(= msgType TEXT_MSG)
 		(= scoreFont 9)
 		(= possibleScore 999)
 		(= score 0)
@@ -92,5 +92,7 @@
 			howFast numVoices numDACs (IsHiRes) platType colorDepth
 		)
 		(theIconBar enable:)
+		;give ego initial items
+		(ego get: iMoney)
 	)
 )
