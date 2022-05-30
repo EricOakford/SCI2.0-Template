@@ -1,0 +1,18 @@
+;;; Sierra Script
+;;; 129.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_OPEN 1)
+(define C_CLOSED 2)
+(define C_GARGOYLE_HERE 3)
+(define C_WEARING_AMULET 4)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_GARGOYLE 2)
+(define N_SIGN 3)
+(define N_DOOR 4)
+

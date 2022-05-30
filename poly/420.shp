@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 420.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default420 =  0
+	[P_Room 37] = [1 PBarredAccess 17 0 0 319 0 319 189 298 189 159 174 172 148 139 145 102 164 48 158 59 141 80 140 80 136 43 136 42 140 55 141 43 157 0 157]
+	[P_SouthWest 11] = [1 PBarredAccess 4 109 187 109 189 0 189 0 187]
+)

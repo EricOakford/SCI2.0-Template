@@ -1,0 +1,22 @@
+;;; Sierra Script
+;;; 232.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_CHEST 1)
+(define N_ROOM 2)
+(define N_MAN 3)
+(define N_WOMAN 4)
+(define N_CANDELABRA 5)
+(define N_VASE 6)
+(define N_PEARLS 7)
+
+;;; CASES
+
+(define C_LOCKED 1)
+(define C_ALREADY_LOOTED 2)
+(define C_EXPLICIT 3)
+(define C_CLEAN 4)
+(define C_FIRST 5)
+

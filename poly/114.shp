@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 114.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default114 =  0
+	[P_Top 27] = [1 PBarredAccess 12 0 0 319 0 319 88 293 94 244 94 94 121 41 107 43 119 81 124 55 133 19 130 0 135]
+	[P_Bottom 23] = [1 PBarredAccess 10 110 189 184 157 177 178 221 181 250 166 231 162 209 174 198 161 319 109 319 189]
+)

@@ -1,0 +1,22 @@
+;;; Sierra Script
+;;; 430.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_AFTER_CRUSHER 1)
+(define C_BEEN_IN_GUILD 2)
+(define C_NOT_THIEF 3)
+(define C_IS_THIEF 4)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_TAVERN 2)
+(define N_BUTCHER 3)
+(define N_BAKERY 4)
+(define N_ALLEY 5)
+(define N_BUTCHER_DOOR 7)
+(define N_THIEF 8)
+(define N_TAVERN_DOOR 6)
+

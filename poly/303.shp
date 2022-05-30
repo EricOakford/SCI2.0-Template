@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 303.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default303 =  0
+	[P_Skeleton 11] = [1 PBarredAccess 4 91 133 86 150 69 145 68 113]
+	[P_Grate 11] = [1 PBarredAccess 4 199 9 189 26 136 18 140 3]
+)

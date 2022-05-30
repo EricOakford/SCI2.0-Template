@@ -1,0 +1,12 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 401.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default401 =  0
+	[P_Room 37] = [1 PBarredAccess 17 3 162 3 189 0 189 0 0 319 0 319 189 315 189 313 184 293 185 253 145 219 145 201 111 242 111 224 92 204 93 197 89 85 89]
+	[P_RightTable 13] = [1 PBarredAccess 5 65 138 56 127 76 110 145 110 136 138]
+	[P_LeftTable 13] = [1 PBarredAccess 5 204 146 210 174 180 180 80 180 99 146]
+	[P_DartBoard 13] = [1 PBarredAccess 5 61 43 70 34 80 39 82 52 65 63]
+)

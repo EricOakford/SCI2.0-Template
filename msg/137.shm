@@ -1,0 +1,20 @@
+;;; Sierra Script
+;;; 137.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_BADCLIMB 1)
+(define C_GUARDED 2)
+(define C_NO_ENTRY 3)
+(define C_GUARDS_CHAT 4)
+(define C_BACK_TO_CHATTING 5)
+(define C_NIGHT 6)
+
+;;; NOUNS
+
+(define N_WALL 1)
+(define N_ROOM 2)
+(define N_SLEEPING_GUARD 3)
+(define N_NIGHT_GUARDS 4)
+

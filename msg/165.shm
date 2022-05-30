@@ -1,0 +1,52 @@
+;;; Sierra Script
+;;; 165.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_MERV 2)
+(define N_SIGN 3)
+(define N_WAGON 4)
+(define N_WALL 5)
+(define N_ENTRANCE 6)
+(define N_GATE 7)
+(define N_EGO_TELL 8)
+(define N_MEEP_TOY 9)
+(define N_SLEEPING_PILLS 10)
+(define N_RATIONS 11)
+
+;;; CASES
+
+(define C_CANT_ROB 1)
+(define C_ALREADY_ROBBED 2)
+(define C_DAY 3)
+(define C_NIGHT 4)
+(define C_BAD_CLIMB 5)
+(define C_GOOD_CLIMB 6)
+(define C_SPIELBURG 7)
+(define C_BARNARD 8)
+(define C_TROUBLES 9)
+(define C_TRINKETS 10)
+(define C_CASTLE 11)
+(define C_CONFED_BAR 12)
+(define C_TOWN 13)
+(define C_ELSA 14)
+(define C_GUARD 15)
+(define C_SHERIFF 16)
+(define C_OTHERS_TROUBLES 17)
+(define C_MEEP_TOY 18)
+(define C_SLEEPING_PILLS 19)
+(define C_HELLO_FIRST 20)
+(define C_HELLO_AGAIN 21)
+(define C_GOODBYE 22)
+(define C_NOT_ENOUGH 23)
+(define C_BUY_NOTHING 24)
+(define C_BUY_RATIONS 25)
+(define C_BUY_TOY 26)
+(define C_ALREADY_BOUGHT_PILLS 27)
+(define C_ALREADY_BOUGHT_TOY 28)
+(define C_BUY_PILLS 29)
+(define C_RATIONS 30)
+(define C_HELLO 31)
+

@@ -20,17 +20,19 @@
 )
 
 ;starting icon coords
-(define ICON_X 18)
+(define ICON_X 30)
 (define ICON_Y 25)
 
+
+;EO: The icon bar does not display properly; this is a compatibility issue
+; related to SCICompanion's altering of RESOURCE.MAP. Hope a fix is on the way...
 (instance mainIconBar of IconBar
 	(method (init &tmp theCast)
 		((= theIconBar self)
 			add:
 			;These correspond to ICON_*** in game.sh
-				iconWalk iconLook iconDo iconTalk iconCustom
+				iconWalk iconLook iconDo iconTalk iconActions iconCast
 				iconUseIt iconInventory iconControlPanel iconHelp
-			disable: ICON_CUSTOM
 			curIcon: iconWalk	;gotta start somewhere
 			useIconItem: iconUseIt
 			helpIconItem: iconHelp
@@ -41,9 +43,29 @@
 		)
 		(super init: &rest)
 		(plane addCast: (= theCast (Cast new:)))
+		(skipIcon1 init: theCast)
+		(skipIcon2 init: theCast)
 		(invItem init: theCast)
 	)
 )
+
+(instance skipIcon1 of View
+	(properties
+		view vIconBar
+		loop 12
+		cel 1
+	)
+)
+
+(instance skipIcon2 of View
+	(properties
+		x 306
+		view vIconBar
+		loop 13
+		cel 1
+	)
+)
+
 
 (instance iconWalk of IconItem
 	(properties
@@ -161,18 +183,18 @@
 	)
 )
 
-(instance iconCustom of IconItem
+(instance iconActions of IconItem
 	(properties
+		noun N_ACTION
+		modNum 0
+		signal (| HIDEBAR IMMEDIATE)
+		message NULL
 		mainView vIconBar
-		mainLoop lCustomIcon
-		mainCel 0
-		message 0
-		signal IMMEDIATE
-		noun N_CUSTOM
-		helpVerb V_HELP
+		mainLoop lActionIcon
 		maskView vIconBar
 		maskLoop lDisabledIcon
-		maskCel 9
+		maskCel 8
+		helpVerb V_HELP
 	)
 	
 	(method (init)
@@ -180,9 +202,9 @@
 			(+
 				(iconTalk x?)
 				(CelWide
-					(iconTalk mainView?)
-					(iconTalk mainLoop?)
-					(iconTalk mainCel?)
+					(iconTalk view?)
+					(iconTalk loop?)
+					(iconTalk cel?)
 				)
 			)
 		)
@@ -190,7 +212,62 @@
 	)
 	
 	(method (select)
-		(return FALSE)
+		(return
+			(if (super select: &rest)
+				(theIconBar hide:)
+				((ScriptID ACTIONBAR) init: showSelf:)
+				(DisposeScript ACTIONBAR)
+				(return TRUE)
+			else
+				FALSE
+			)
+		)
+	)
+)
+
+
+(instance iconCast of IconItem
+	(properties
+		noun N_CAST
+		modNum 0
+		signal (| HIDEBAR RELVERIFY IMMEDIATE)
+		message V_CONTROL
+		mainView vIconBar
+		mainLoop lCastIcon
+		maskView vIconBar
+		maskLoop lDisabledIcon
+		maskCel 3
+		helpVerb V_HELP
+	)
+	
+	(method (init)
+		(= x
+			(+
+				(iconActions x?)
+				(CelWide
+					(iconActions view?)
+					(iconActions loop?)
+					(iconActions cel?)
+				)
+			)
+		)
+		(super init: &rest)
+	)
+	
+	(method (select)
+		(return
+			(if (super select: &rest)
+				(if (not [egoStats MAGIC])
+					(messager say: N_CAST NULL C_NO_MAGIC 0 0 GAME_ICONBAR)
+				else
+					(theIconBar hide:)
+					((ScriptID SPELLS) init: showSelf:)
+					(return TRUE)
+				)
+			else
+				FALSE
+			)
+		)
 	)
 )
 
@@ -200,9 +277,9 @@
 		mainView vIconBar
 		mainLoop lItemIcon
 		mainCel 0
-		message 0
+		message NULL
 		signal (| HIDEBAR RELVERIFY)
-		noun N_CURITEM
+		noun N_USEIT
 		helpVerb V_HELP
 		maskView vIconBar
 		maskLoop lDisabledIcon
@@ -211,11 +288,11 @@
 	(method (init)
 		(= x
 			(+
-				(iconCustom x?)
+				(iconCast x?)
 				(CelWide
-					(iconCustom mainView?)
-					(iconCustom mainLoop?)
-					(iconCustom mainCel?)
+					(iconCast mainView?)
+					(iconCast mainLoop?)
+					(iconCast mainCel?)
 				)
 			)
 		)
@@ -229,7 +306,7 @@
 		mainLoop lInvIcon
 		mainCel 0
 		type nullEvt
-		message 0
+		message NULL
 		signal (| HIDEBAR RELVERIFY IMMEDIATE)
 		noun N_INVENTORY
 		helpVerb V_HELP

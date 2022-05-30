@@ -1,0 +1,16 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 154.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default154 =  0
+	[P_HutTop 17] = [1 PBarredAccess 7 120 0 319 0 319 55 160 149 103 120 129 102 120 94]
+	[P_TreeBase 27] = [1 PBarredAccess 12 0 135 30 135 95 148 116 167 116 172 92 172 92 184 56 184 50 176 38 176 22 189 0 189]
+	[P_NorthWest 11] = [1 PBarredAccess 4 0 0 91 0 91 112 0 112]
+	[P_SouthEast 11] = [1 PBarredAccess 4 249 189 218 163 319 146 319 189]
+	[P_HutBottom 11] = [1 PBarredAccess 4 319 140 190 154 180 151 319 71]
+	[P_Castle 13] = [1 PBarredAccess 5 94 41 119 21 141 24 144 42 126 46]
+	[P_Tree 69] = [1 PBarredAccess 33 1 155 45 119 12 80 11 54 0 51 1 0 174 0 161 17 104 18 79 46 62 44 51 56 57 65 97 60 114 54 137 58 119 64 104 64 95 72 75 75 89 109 82 150 104 166 86 164 80 160 72 165 88 179 78 181 57 179 53 169 24 174 11 188 0 175]
+	[P_House 19] = [1 PBarredAccess 8 153 103 152 50 145 42 170 0 319 0 318 134 217 156 118 120]
+)

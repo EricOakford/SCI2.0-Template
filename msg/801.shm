@@ -1,0 +1,16 @@
+;;; Sierra Script
+;;; 801.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_FOREST 1)
+(define N_FLOOR 2)
+(define N_ROCKS 3)
+(define N_TREES 4)
+(define N_BUSH 5)
+(define N_SNOW 6)
+
+;;; CASES
+
+

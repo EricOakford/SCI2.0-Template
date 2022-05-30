@@ -1,0 +1,15 @@
+;;; Sierra Script
+;;; 600.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_SUCCESSES 1)
+(define C_FLOPS 2)
+(define C_HEAD_OUT 3)
+(define C_HEADING 4)
+
+;;; NOUNS
+
+(define N_INTRO 1)
+

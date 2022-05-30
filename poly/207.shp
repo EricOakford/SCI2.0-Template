@@ -1,0 +1,17 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 207.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default207 =  0
+	[P_LeftPews 13] = [1 PBarredAccess 5 7 153 67 97 152 113 128 189 7 173]
+	[P_RightPews 11] = [1 PBarredAccess 4 288 141 315 177 194 189 191 160]
+	[P_TopRightPews 11] = [1 PBarredAccess 4 259 102 278 123 181 141 177 119]
+	[P_GhostPewFloor 11] = [1 PTotalAccess 4 279 128 283 134 193 152 186 147]
+	[P_LeftWindows 11] = [1 PBarredAccess 4 1 42 76 24 77 96 1 140]
+	[P_RightWindows 11] = [1 PBarredAccess 4 282 42 319 47 319 149 280 118]
+	[P_Wall 21] = [1 PBarredAccess 9 258 97 237 84 188 86 184 91 138 92 136 88 79 88 78 2 260 2]
+	[P_Altar 19] = [1 PBarredAccess 8 121 84 121 70 128 14 169 7 191 19 203 75 186 92 138 94]
+	[P_GhostPew 11] = [1 PBarredAccess 4 277 125 286 140 190 159 182 140]
+)

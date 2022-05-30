@@ -1,0 +1,9 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 230.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default230 =  0
+	[P_Room 23] = [1 PContainedAccess 10 36 189 268 189 274 167 235 139 186 141 181 126 136 127 129 140 84 140 34 177]
+)

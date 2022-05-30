@@ -1,0 +1,28 @@
+;;; Sierra Script
+;;; 413.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_UNINVITED 1)
+(define C_FALL_ASLEEP 2)
+(define C_DAY 3)
+(define C_WAKE_UP 4)
+(define C_NIGHT 5)
+(define C_CONFIRM_STEAL 6)
+(define C_STEAL_MONEY 7)
+(define C_ALREADY_STOLE 8)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_COUCH 2)
+(define N_COFFEE_TABLE 3)
+(define N_CHEST 4)
+(define N_DRESSER 5)
+(define N_FIREPLACE 6)
+(define N_LAMP 7)
+(define N_DOOR 8)
+(define N_PLANT 9)
+(define N_CHAIR 10)
+

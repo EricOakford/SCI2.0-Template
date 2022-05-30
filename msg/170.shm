@@ -1,0 +1,17 @@
+;;; Sierra Script
+;;; 170.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_FIRST_NIGHT 1)
+(define C_GIANT_GONE 2)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_MUSHROOMS 2)
+(define N_FAIRIES 3)
+(define N_GIANT 4)
+(define N_ROCKS 5)
+

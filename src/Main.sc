@@ -15,28 +15,25 @@
 (use Print)
 (use Dialog)
 (use Talker)
+(use String)
+(use Array)
 (use Messager)
 (use Polygon)
 (use PolyPath)
 (use StopWalk)
 (use IconBar)
+(use GameRoom)
 (use Plane)
 (use Flags)
 (use Grooper)
+(use Procs)
 (use Sound)
 (use User)
 (use Game)
 (use System)
 
 (public
-	SCI2 0
-	Bset 1
-	Bclr 2
-	Btst 3
-	Face 4
-	EgoDead 5
-	YesNoDialog 6
-
+	SYTYWH 0
 )
 
 (local
@@ -134,10 +131,13 @@
 	statusLineCode			;pointer for status line code
 	soundFx					;sound effect being played
 	theMusic				;music object, current playing music
+	theMusic2				;secondary music
 	globalSound				;ambient sound
 	gameFlags				;pointer for Flags object, which only requires one global
+	scoreFlags
 	disabledIcons
 	oldCurIcon
+	spellCursor
 	;end globals to retain at restart
 	
 	myTextColor				;color of text in message boxes
@@ -149,74 +149,65 @@
 	numDACs					;Number of voices supported by digital audio driver
 	numVoices				;Number of voices supported by sound driver
 	deathReason				;message to display when calling EgoDead
-)
-
-;These will be replaced with macro defines once those are supported
-(procedure (Bset flagEnum)
-;;;	(|= [gameFlags (/ flagEnum 16)] (>> $8000 (mod flagEnum 16))
-	(gameFlags set: flagEnum)
-)
-
-(procedure (Bclr flagEnum)
-;;;	(&= [gameFlags (/ flagEnum 16)] (~ (>> $8000 (mod flagEnum 16))))
-	(gameFlags clear: flagEnum)
-)
-
-(procedure (Btst flagEnum)
-;;;	(return
-;;;		(&
-;;;			[gameFlags (/ flagEnum 16)]
-;;;			(>> $8000 (mod flagEnum 16))
-;;;		)
-;;;	)
-	(gameFlags test: flagEnum)
-)
-
-(procedure (Face actor1 actor2 both whoToCue &tmp ang1To2 theX theY i)
-	;This makes one actor face another.
-	(= i 0)
-	(if (not (> argc 3))
-		(= theX (actor2 x?))
-		(= theY (actor2 y?))
-		(if (== argc 3) (= i both))
-	else
-		(= theX actor2)
-		(= theY both)
-		(if (== argc 4) (= i whoToCue))
-	)
-	(= ang1To2
-		(GetAngle (actor1 x?) (actor1 y?) theX theY)
-	)
-	(actor1 setHeading: ang1To2 i)
-)
-
-(procedure (EgoDead theReason)
-	;This procedure handles when ego dies. It closely matches that of SQ4, SQ5 and KQ6.
-	;If a specific message is not given, the game will use a default message.
-	(if (not argc)
-		(= deathReason deathGENERIC)
-	else
-		(= deathReason theReason)
-	)
-	(curRoom newRoom: DEATH)
-)
-
-(procedure (YesNoDialog question &tmp oldCur)
-	;this brings up a "yes or no" dialog choice.
-	(= oldCur ((theIconBar curIcon?) getCursor:))
-	(theGame setCursor: normalCursor)
-	(return
-		(Print
-			font:		userFont
-			width:		100
-			mode:		teJustCenter
-			addText:	question NULL NULL 1 0 0 MAIN
-			addButton:	TRUE N_YESORNO NULL NULL 1 0 25 MAIN
-			addButton:	FALSE N_YESORNO NULL NULL 2 75 25 MAIN
-			init:
-		)
-	)
-	(theGame setCursor: oldCur)
+	spellCost		=		2	;spCostOpen
+	spCostDetect	=		2
+	spCostDazzle	=		3
+	spCostZap		=		3
+	spCostFlame		=		5
+	spCostLove		=		10
+	spCostHeal		=		10
+	spCostLepGold	=		10
+	contentLevel
+	egoGait
+	disabledActions
+	heroType
+	oldSysTime
+	Clock
+	Day
+	Night
+	timeToEat
+	hungerCounter
+	timeODay
+	lostSleep
+	lastRestDay
+	lastRestTime
+	timeEntered	;what time when you entered a room? (updated on every room change)
+	freeMeals	;As the game progresses through the day,
+				; this gets reduced first. If this is 0, then you eat a ration.
+	theBuyDialog
+	wareList
+	projObj
+	;TODO: Replace these with IntArray instances
+	[egoStats NUM_ATTRIBS]
+	[skillTicks NUM_ATTRIBS]
+	[oldStats NUM_ATTRIBS]
+	;recovery time for stamina, health, and mana
+	stamCounter =	STAM_RATE
+	healCounter =	HEAL_RATE
+	manaCounter	=	MANA_RATE
+	userName
+	globalTeller
+	bellaState	=		bellaInitial
+	cleoState	=		cleoInitial
+	meepState	=		meepInitial
+	;combat globals
+	monsterNum
+	monsterHealth
+	zapPower
+	monsterDazzle
+	numGoblins
+	daggerRoom
+	missedDaggers
+	hitDaggers
+	egoX
+	egoY
+	monsterDistX
+	monsterDistY
+	battleResult
+	
+	;money globals
+	bucks
+	silversInBank	
 )
 
 (instance egoObj of GameEgo
@@ -226,7 +217,7 @@
 	)
 )
 
-(instance SCI2 of Game
+(instance SYTYWH of Game
 	; The main game instance. It adds game-specific functionality.	
 	(properties
 		printLang ENGLISH	;set your game's language here. Supported languages can be found in SYSTEM.SH.
@@ -237,7 +228,11 @@
 		(super init:)
 
 		;Assign globals to this script's objects
-		((= theMusic musicSound)
+		((= theMusic longSong)
+			owner: self
+			init:
+		)
+		((= theMusic2 longSong2)
 			owner: self
 			init:
 		)
@@ -263,6 +258,19 @@
 		((= gameFlags gameEventFlags)
 			init:
 		)
+		((= scoreFlags gameScoreFlags)
+			init:
+		)
+;;;		((= egoStats egoStatArray)
+;;;			init:
+;;;		)
+;;;		((= skillTicks skillTickArray)
+;;;			init:
+;;;		)
+;;;		((= oldStats oldStatArray)
+;;;			init:
+;;;		)
+		(= userName (String new:))
 		((= altPolyList (List new:)) name: {altPolys} add:)
 
 		;load up the ego, icon bar, inventory, control panel, and status line
@@ -282,6 +290,16 @@
 		(if debugging
 			((ScriptID DEBUG 0) init:)
 		)
+		(if
+			;all rooms where you can encounter a monster
+			(OneOf roomNum
+				111 112 117 118 119 123 124 125 126 127 133
+				134 135 136 142 143 144 151 152 156 157 161
+				162 163 169 171 172 174 175 179 180 181 185
+				186 192
+			)
+			(ScriptID rgENCOUNTER)
+		)
 		(statusLineCode doit: roomNum)
 		(super startRoom: roomNum)
 		(if
@@ -293,6 +311,97 @@
 			(ego setLooper: stopGroop)
 		)
 	)
+	
+	(method (save)
+		(if (Btst fSaveAllowed)
+			(super save:)
+		else
+			(messager say: N_CANT_SAVE NULL NULL 0 0 MAIN)
+		)
+	)
+	
+	(method (doit &tmp thisTime)
+		(if
+			;run the regular cycle stuff
+			(and
+				(curRoom isKindOf: HeroRoom)
+				(curRoom timePasses?)
+				(!= oldSysTime (= thisTime (GetTime SysTime1)))
+			)
+			(= oldSysTime thisTime)
+			(= thisTime Clock)
+			;if it's passed 3600, change to the next day.
+			(if (>= (++ Clock) GAMEDAY)
+				(= Clock 0)
+				(NextDay)
+			)
+			;if we advance to a new hour, fix the time
+			(if (< (mod Clock GAMEHOUR) (mod thisTime GAMEHOUR))
+				(FixTime)
+			)
+			;if ego's sneaking, use the skill a bit
+			(if (== egoGait MOVE_SNEAK)
+				(SkillUsed STEALTH 1)
+			)
+			;see if it's time to eat
+			(cond 
+				(
+					(and
+						(or
+							(and (< 1100 Clock) (< Clock 1200))
+							(and (< 2500 Clock) (< Clock 2600))
+						)
+						(not timeToEat)
+					)
+					(if (> Clock 2500)
+						(= timeToEat 2650)
+					else
+						(= timeToEat 1250)
+					)
+					(ego eatMeal:)
+				)
+				((> Clock timeToEat)
+					(= timeToEat FALSE)
+				)
+			)
+			(if (<= (-= hungerCounter 1) 0)
+				(= hungerCounter 100)
+				(if (Btst fStarving)
+					(ego eatMeal:)
+				)
+			)
+			;every 20 game seconds, ego gets refreshed in Stamina.
+			(if (not (-- stamCounter))
+				(= stamCounter STAM_RATE)
+				(cond 
+					;if the hero's starving, or has gone more than 1 day without sleep, reduce SP by 5
+					((or (Btst fStarving) (> lostSleep 1))
+						(ego useStamina: 5)
+					)
+					;if the Hero's running, then reduce SP by 2
+					((== egoGait MOVE_RUN)
+						(ego useStamina: 2)
+					)
+					;if the hero's not getting hungry, and hasn't gone a day without sleep, then regain by 1
+					((and (not (Btst fHungry)) (not lostSleep))
+						(ego useStamina: -1)
+					)
+				)
+				;mana gets refreshed once every 5 stamina refreshes
+				(if (not (-- manaCounter))
+					(= manaCounter MANA_RATE)
+					(ego useMana: -1)
+				)
+				;health gets refreshed once every 15 stamina refreshes
+				(if (not (-- healCounter))
+					(= healCounter HEAL_RATE)
+					(ego takeDamage: -1)
+				)
+			)
+		)	;end of timekeeping code
+		(super doit:)
+	)
+
 
 	(method (handleEvent event)
 		(super handleEvent: event)
@@ -376,12 +485,12 @@
 	)
 	
 	(method (restart)
-		;if a parameter is given, skip the dialog and quit immediately		
+		;if a parameter is given, skip the dialog and restart immediately		
 		(if argc
 			(curRoom newRoom: GAME_RESTART)
 		else
 			;the game's quit dialog
-			(if (YesNoDialog N_RESTART)
+			(if (YesOrNo N_RESTART)
 				(curRoom newRoom: GAME_RESTART)
 			)
 		)
@@ -393,7 +502,7 @@
 			(super quitGame:)
 		else
 			;the game's quit dialog
-			(if (YesNoDialog N_QUITGAME)
+			(if (YesOrNo N_QUITGAME)
 				(super quitGame:)
 			)
 		)
@@ -419,6 +528,33 @@
 				(switch who
 					;Add the talkers here, using the defines you set in the message editor
 					;from TALKERS.SH
+					(BAGI		(ScriptID rStarbucks 1))
+					(BANKER		(ScriptID tlkBanker	0))
+					(BARNARD	(ScriptID tlkBarnard 0))
+					(BARTENDER	(ScriptID tlkBartender 0))
+					(BELLA		(ScriptID tlkBella 0))
+					(BIG_JIM	(ScriptID 135 1))
+					(BIG_JURG	(ScriptID tlkJurgBros 0))
+					(BONEHEAD	(ScriptID tlkBonehead 0))
+					(BUTCH		(ScriptID tlkButch 0))
+					(CASSIDY	(ScriptID rButcherShop 1))
+					(CAVEMAN	(ScriptID rCavemen 1))
+					(CLETUS		(ScriptID rConfedGate 1))
+					(GARGOYLE	(ScriptID tlkGargoyle 0))
+					(GHOST		(ScriptID rChurchInside 2))
+					(HEALER		(ScriptID rHealerInside 1))
+					(HILDE		(ScriptID tlkHilde 0))
+					(HIPPIE		(ScriptID rEranasPeace 1))
+					(KASPAR		(ScriptID tlkKaspar 0))
+					(LAWYER		narrator) ;(ScriptID rOgreArea 1))
+					(LIL_JURG	(ScriptID tlkJurgBros	1))
+					(MEEP		(ScriptID tlkMeep 0))
+					(MERV		(ScriptID rTownOutside 1))
+					(MOBSTER	(ScriptID tlkMobster 0))
+					(MONK		(ScriptID rChurchInside 1))
+					(RICHARD	(ScriptID tlkRichard 0))
+					(WITCH_MAMA	(ScriptID rWitchHouse 1))
+					(WOLFGANG	(ScriptID rGuildHall	1))
 					(else  narrator)
 				)
 			)
@@ -468,7 +604,7 @@
 				ICON_LOOK
 				ICON_DO
 				ICON_TALK
-				ICON_CURITEM
+				ICON_USEIT
 				ICON_INVENTORY
 		)
 		(theGame setCursor: waitCursor)
@@ -483,21 +619,21 @@
 			ICON_LOOK
 			ICON_DO
 			ICON_TALK
-			ICON_CURITEM
+			ICON_USEIT
 			ICON_INVENTORY
 		)
 		(if (not (curRoom inset:))
 			(theIconBar enable: ICON_CONTROL)
 		)
 		(if (not (theIconBar curInvIcon?))
-			(theIconBar disable: ICON_CURITEM)
+			(theIconBar disable: ICON_USEIT)
 		)
 		(if oldCurIcon
 			(theIconBar curIcon: oldCurIcon)
 			(theGame setCursor: (oldCurIcon getCursor:))
 			(if
 				(and
-					(== (theIconBar curIcon?) (theIconBar at: ICON_CURITEM))
+					(== (theIconBar curIcon?) (theIconBar at: ICON_USEIT))
 					(not (theIconBar curInvIcon?))
 				)
 				(theIconBar advanceCurIcon:)
@@ -514,16 +650,31 @@
 	)
 )
 
+(instance gameScoreFlags of Flags
+	(properties
+		size NUMFLAGS
+	)
+)
+
+
 (instance theGlobalSound of Sound
 	(properties
 		flags mNOPAUSE
 	)
 )
-(instance musicSound of Sound
+
+(instance longSong of Sound
 	(properties
 		flags mNOPAUSE
 	)
 )
+
+(instance longSong2 of Sound
+	(properties
+		flags mNOPAUSE
+	)
+)
+
 (instance soundEffects of Sound
 	(properties
 		flags (| mNOPAUSE mLOAD_AUDIO)
@@ -547,5 +698,11 @@
 		)
 	)
 )
+
+(instance egoStatArray of IntArray)
+
+(instance skillTickArray of IntArray)
+
+(instance oldStatArray of IntArray)
 
 (instance stopGroop of GradualLooper)

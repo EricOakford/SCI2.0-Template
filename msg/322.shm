@@ -1,0 +1,32 @@
+;;; Sierra Script
+;;; 322.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_KASPAR 2)
+(define N_BAGI 3)
+(define N_BELLA 4)
+(define N_ART 5)
+(define N_MENU 6)
+(define N_GIFTS 7)
+(define N_CASH_REGISTER 8)
+(define N_COFFEE_STUFF 9)
+(define N_CREAMER 10)
+(define N_ADVERTISEMENT 11)
+(define N_INSIGNIA 12)
+(define N_DOOR 13)
+
+;;; CASES
+
+(define C_VAMPIRES_GONE 1)
+(define C_FIRST_TIME 2)
+(define C_BELLA_HERE 3)
+(define C_MODERATE 4)
+(define C_CLEAN 5)
+(define C_EXPLICIT 6)
+(define C_KASPAR_HERE 7)
+(define C_BAGI_HERE 8)
+(define C_ALREADY_ROBBED 9)
+

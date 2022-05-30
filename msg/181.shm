@@ -1,0 +1,14 @@
+;;; Sierra Script
+;;; 181.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_LOG 1)
+
+;;; CASES
+
+(define C_KNOW_POEM 1)
+(define C_LOG_TURNED 2)
+(define C_AFTER_WAND 3)
+

@@ -1,0 +1,12 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 433.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default433 =  0
+	[P_Room 35] = [1 PBarredAccess 16 0 189 0 0 319 0 319 189 261 189 226 150 217 142 209 134 187 112 143 112 124 111 115 128 107 143 84 174 85 183 85 189]
+	[P_Bookshelf 17] = [1 PBarredAccess 7 191 66 266 108 267 178 257 179 190 112 123 111 123 68]
+	[P_Carpet 13] = [1 PBarredAccess 5 86 176 125 113 183 112 253 176 146 179]
+	[P_Wall 11] = [1 PBarredAccess 4 189 43 189 68 133 68 133 42]
+)

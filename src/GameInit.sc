@@ -16,6 +16,7 @@
 (use GameInv)
 (use Plane)
 (use Talker)
+(use Procs)
 (use User)
 (use System)
 (use SpeedTst)
@@ -53,15 +54,15 @@
 		(TextColors 0 15 23 5)
 		
 		;now set up the interface colors
-		(= myTextColor 0)
-		(= myBackColor 5)
+		(= myTextColor 66)
+		(= myBackColor 69)
 		(= myLowlightColor (Palette PalMatch 159 159 159))
 		(= myHighlightColor 0)
 		(= userFont USERFONT)
 		(= systemPlane GameWindow)
 		(Print
-			back: 5
-			fore: 0
+			back: myBackColor
+			fore: myTextColor
 		)
 		((= narrator Narrator)
 			font: userFont
@@ -73,7 +74,7 @@
 		
 		(= msgType TEXT_MSG)
 		(= scoreFont 9)
-		(= possibleScore 999)
+		(= possibleScore 500)
 		(= score 0)
 		(= numVoices (DoSound SndNumVoices))
 		(= numDACs (DoSound SndNumDACs))
@@ -92,7 +93,21 @@
 			howFast numVoices numDACs (IsHiRes) platType colorDepth
 		)
 		(theIconBar enable:)
+		
+		;start at 11 AM
+		(FixTime 11)
 		;give ego initial items
-		(ego get: iMoney)
+		(ego get: iMoney 1000)
+		(ego get: iLeather)
+		(ego get: iFood 5)		
+		;keep the cost of each spell
+		(= spellCost 2)	;spCostOpen
+		(= spCostDetect 2)
+		(= spCostDazzle 3)
+		(= spCostZap 3)
+		(= spCostFlame 5)
+		(= spCostLove 10)
+		(= spCostHeal 10)
+		(= spCostLepGold 10)
 	)
 )

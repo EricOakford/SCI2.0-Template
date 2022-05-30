@@ -1,0 +1,31 @@
+;;; Sierra Script
+;;; 115.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_PATRICK 2)
+(define N_ROOMMATES 3)
+(define N_EGO_TELL 4)
+(define N_CAGE 5)
+(define N_FIRE 6)
+(define N_BED 7)
+
+;;; CASES
+
+(define C_FIRST 1)
+(define C_CAVE 2)
+(define C_BEAR 3)
+(define C_CAVEMEN 4)
+(define C_LIZARD 5)
+(define C_PTEROSAUR 6)
+(define C_FLUENCY 7)
+(define C_AGAIN 8)
+(define C_GOODBYE 9)
+(define C_FREE_BIRD 10)
+(define C_AFTER_FREE 11)
+(define C_CAGE_EMPTY 12)
+(define C_NIGHT 13)
+(define C_GOOD_MORNING 14)
+

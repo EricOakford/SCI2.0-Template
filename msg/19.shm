@@ -1,0 +1,17 @@
+;;; Sierra Script
+;;; 19.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_TITLE 1)
+(define C_CANCEL 2)
+(define C_SINGLE 3)
+(define C_PLURAL 4)
+
+;;; NOUNS
+
+(define N_BUY 1)
+(define N_GIVE 2)
+(define N_SILVER 3)
+

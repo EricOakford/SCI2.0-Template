@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 187.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default187 =  0
+	[P_Room 33] = [1 PBarredAccess 15 111 76 87 103 57 103 53 112 114 112 123 91 264 93 242 89 144 85 0 31 0 0 319 0 319 189 0 189 0 35]
+	[P_Water 45] = [1 PBarredAccess 21 319 132 286 140 286 130 265 125 256 116 242 120 229 126 182 126 121 136 104 139 82 136 76 130 29 124 29 117 257 111 279 96 245 85 233 79 221 80 208 69 319 70]
+)

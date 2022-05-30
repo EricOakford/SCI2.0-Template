@@ -1,0 +1,21 @@
+;;; Sierra Script
+;;; 156.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_ROGUE_HERE 1)
+(define C_KILLED_ROGUE 2)
+(define C_SEARCH_HIM 3)
+(define C_GOODBYE 4)
+(define C_CLEO 5)
+(define C_MURDER 6)
+(define C_FOREST 7)
+(define C_NAME 8)
+
+;;; NOUNS
+
+(define N_ROGUE 1)
+(define N_ROOM 2)
+(define N_EGO_TELL 3)
+

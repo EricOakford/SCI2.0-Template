@@ -1,0 +1,9 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 119.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default119 =  0
+	[P_Tree 19] = [1 PBarredAccess 8 161 99 125 86 138 26 174 0 319 0 319 141 209 140 160 123]
+)

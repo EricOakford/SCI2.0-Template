@@ -1,0 +1,46 @@
+;;; Sierra Script
+;;; 207.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_MONK 1)
+(define N_ROOM 2)
+(define N_ALTAR 3)
+(define N_GHOST 4)
+(define N_CONGREGANT 5)
+(define N_PEW 6)
+(define N_WINDOWS 7)
+(define N_BACK_ROOM 8)
+(define N_SHOVEL 9)
+(define N_EGO_TELL 10)
+
+;;; CASES
+
+(define C_SERMON 1)
+(define C_RANDOM_COMMENT 2)
+(define C_DAY 3)
+(define C_FIRST_NIGHT 4)
+(define C_NIGHT 5)
+(define C_WRONG_PEW 6)
+(define C_SEE_GHOST 7)
+(define C_TOO_FAR 8)
+(define C_FIRST_GHOST 9)
+(define C_GHOST_DISAPPEARS 10)
+(define C_DIG_BONES 11)
+(define C_DIG_MONEY 12)
+(define C_AFTER_BURIAL 13)
+(define C_DISAPPEAR_AGAIN 14)
+(define C_FIRST_TALK 15)
+(define C_TALK_AGAIN 16)
+(define C_GOT_MONEY 17)
+(define C_GHOUL 18)
+(define C_CHURCH 19)
+(define C_FORECLOSURE 20)
+(define C_MONEY 21)
+(define C_VOLUNTEER 22)
+(define C_CLEO 23)
+(define C_GOODBYE 24)
+(define C_CHURCH_SAVED 25)
+(define C_SHOVEL_GONE 26)
+

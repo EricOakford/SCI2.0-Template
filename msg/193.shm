@@ -1,0 +1,22 @@
+;;; Sierra Script
+;;; 193.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_EXPLICIT 1)
+(define C_MODERATE 2)
+(define C_NO_ENTRY 3)
+(define C_WELCOME 4)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_HAY 2)
+(define N_HORSES 3)
+(define N_CLETUS 4)
+(define N_SIGN 5)
+(define N_SKULL 6)
+(define N_WALL 7)
+(define N_DOORWAY 8)
+

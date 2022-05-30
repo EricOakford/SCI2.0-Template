@@ -1,0 +1,27 @@
+;;; Sierra Script
+;;; 300.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_WITCH 2)
+(define N_LARRY 3)
+(define N_EGO_TELL 4)
+
+;;; CASES
+
+(define C_LARRY_BACK 1)
+(define C_FIRST_TIME 2)
+(define C_EXPLICIT 3)
+(define C_CLEAN 4)
+(define C_HELP 5)
+(define C_TREE 6)
+(define C_SPIRITS 7)
+(define C_CATACOMBS 8)
+(define C_SON 9)
+(define C_WITCHCRAFT 10)
+(define C_REWARD 11)
+(define C_GOODBYE 12)
+(define C_HELLO_AGAIN 13)
+

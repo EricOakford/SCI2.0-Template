@@ -153,22 +153,11 @@
 	(method (init)
 		(= gameControls self)
 		(= controlCast (Cast new:))
-		(= plane controlWind)
 		(self
 			add:
 				iconExit
 				;comment the voice and text buttons out
 				; if you do not intend to have speech in your game
-				(iconVoice
-					theObj: iconVoice
-					selector: #doit
-					yourself:
-				)
-				(iconText
-					theObj: iconText
-					selector: #doit
-					yourself:
-				)
 				(iconAbout
 					theObj: theGame
 					selector: #showAbout
@@ -234,83 +223,6 @@
 		(self show:)
 		(self doit:)
 		(self hide:)
-	)
-)
-
-(instance iconText of ControlIcon
-	(properties
-		noun N_TEXT
-		x 44
-		y 99
-		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
-		mainView vControlIcons
-		mainLoop lTextOffButton
-		helpVerb V_HELP
-	)
-
-	(method (doit &tmp temp0)
-		(if (not (DoSound SndNumDACs))
-			(Prints {A digital audio driver is not loaded.})
-			(return)
-		)
-		(if (and (== mainLoop lTextOnButton) (== (iconVoice mainLoop?) lVoiceOffButton))
-			(Prints {Either TEXT or VOICE must be set to ON.})
-			(return)
-		)
-		(= mainLoop (= loop (if (== mainLoop lTextOffButton) lTextOnButton else lTextOffButton)))
-		(UpdateScreenItem self)
-		(switch mainLoop
-			(lTextOnButton
-				(|= msgType TEXT_MSG)
-			)
-			(lTextOffButton
-				(^= msgType TEXT_MSG)
-			)
-		)
-	)
-	
-	(method (show)
-		(= mainLoop (if (& msgType TEXT_MSG) lTextOnButton else lTextOffButton))
-		(super show: &rest)
-	)
-)
-
-(instance iconVoice of ControlIcon
-	(properties
-		noun N_VOICE
-		x 67
-		y 99
-		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
-		message 0
-		mainView vControlIcons
-		mainLoop lVoiceOffButton
-		helpVerb V_HELP
-	)
-	
-	(method (doit)
-		(if (not (DoSound SndNumDACs))
-			(Prints {A digital audio driver is not loaded.})
-			(return)
-		)
-		(if (and (== mainLoop lVoiceOnButton) (== (iconText mainLoop?) lTextOffButton))
-			(Prints {Either TEXT or VOICE must be set to ON.})
-			(return)
-		)
-		(= mainLoop (= loop (if (== mainLoop lVoiceOnButton) lVoiceOffButton else lVoiceOnButton)))
-		(UpdateScreenItem self)
-		(switch mainLoop
-			(lVoiceOnButton
-				(|= msgType CD_MSG)
-			)
-			(lVoiceOffButton
-				(^= msgType CD_MSG)
-			)
-		)
-	)
-	
-	(method (show)
-		(= mainLoop (if (& msgType CD_MSG) lVoiceOnButton else lVoiceOffButton))
-		(super show: &rest)
 	)
 )
 

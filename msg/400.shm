@@ -1,0 +1,36 @@
+;;; Sierra Script
+;;; 400.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_OTTO_CLEANUP 1)
+(define C_NIGHT 2)
+(define C_PICKFAIL 3)
+(define C_PICKSUCCESS 4)
+(define C_DAY 5)
+(define C_BUTCHER_SPEAKS 6)
+(define C_RICHARD_DEAD 7)
+(define C_RICHARD_ALIVE 8)
+(define C_CLOSING_SPEECH 9)
+(define C_ROBBED_SAM 10)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_OTTO 2)
+(define N_MAFIA_SIGN 3)
+(define N_MAFIA_DOOR 4)
+(define N_POLICE_TAPE 5)
+(define N_MAFIA_WINDOW 6)
+(define N_SHERIFF_DOOR 7)
+(define N_SHERIFF_BUILDING 8)
+(define N_BADGE_SIGN 9)
+(define N_WALL 10)
+(define N_STREET 11)
+(define N_BUTCHER 12)
+(define N_BELLA 13)
+(define N_BADGE_DOOR 14)
+(define N_TUB_O_SUDS 15)
+(define N_GATE 16)
+

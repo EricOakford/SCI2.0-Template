@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 200.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default200 =  0
+	[P_Ledge 35] = [1 PBarredAccess 16 0 162 146 119 223 79 232 60 196 58 192 58 119 55 112 51 117 47 229 38 252 41 286 32 273 0 319 0 319 189 0 189]
+	[P_Wall 33] = [1 PBarredAccess 15 0 0 257 0 268 28 190 28 181 35 120 39 99 51 107 62 189 62 190 69 144 81 149 88 121 103 57 119 0 127]
+)

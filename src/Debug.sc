@@ -186,7 +186,7 @@
 							(Print
 								font: userFont
 								y: 50
-								addText: (if (Btst i)
+								addText: (if (gameFlags test: i)
 									{flag is SET}
 								else
 									{flag is CLEARED}
@@ -196,8 +196,8 @@
 								addButton: -1 {cancel} 0 40
 								init:
 							)
-							(1 (Bset i))
-							(2 (Bclr i))
+							(1 (gameFlags set: i))
+							(2 (gameFlags clear: i))
 						)
 					)
 					(`@i

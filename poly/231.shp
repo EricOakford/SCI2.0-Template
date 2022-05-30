@@ -1,0 +1,9 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 231.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default231 =  0
+	[P_Room 15] = [1 PContainedAccess 6 38 189 268 189 276 170 233 142 83 142 34 177]
+)

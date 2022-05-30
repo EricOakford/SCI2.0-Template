@@ -1,0 +1,14 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 402.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default402 =  0
+	[P_Desk 15] = [1 PBarredAccess 6 70 127 100 116 128 116 129 143 103 155 70 151]
+	[P_Chair 13] = [1 PBarredAccess 5 71 87 72 107 70 147 55 148 51 91]
+	[P_FakeDoor 11] = [1 PBarredAccess 4 32 69 33 124 8 124 8 68]
+	[P_Window 11] = [1 PBarredAccess 4 284 78 284 138 263 131 264 79]
+	[P_Spears 11] = [1 PBarredAccess 4 234 63 235 133 188 133 187 65]
+	[P_Room 47] = [1 PContainedAccess 22 90 128 90 140 143 140 143 146 115 154 66 154 48 142 35 147 26 147 23 128 13 128 0 141 0 189 319 189 311 182 304 179 289 179 245 135 145 135 165 126 126 126 106 128]
+)

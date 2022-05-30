@@ -1,0 +1,14 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 442.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default442 =  0
+	[P_Room 19] = [1 PContainedAccess 8 24 149 0 165 0 189 319 189 319 158 312 156 306 160 292 151]
+	[P_AMTM 13] = [1 PBarredAccess 5 315 111 315 154 309 161 290 156 291 108]
+	[P_Clock 17] = [1 PBarredAccess 7 230 49 236 43 245 44 249 52 246 61 244 65 230 62]
+	[P_Door 11] = [1 PBarredAccess 4 254 73 254 124 223 125 223 72]
+	[P_Safes 11] = [1 PBarredAccess 4 70 72 159 71 158 120 69 121]
+	[P_Cubby 11] = [1 PBarredAccess 4 218 72 218 96 167 95 167 73]
+)

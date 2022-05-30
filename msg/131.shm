@@ -1,0 +1,17 @@
+;;; Sierra Script
+;;; 131.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_GOT_WAND 1)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_PORTRAIT 2)
+(define N_BOXES 3)
+(define N_ORB 4)
+(define N_DRAGON 5)
+(define N_WAND_BOX 6)
+

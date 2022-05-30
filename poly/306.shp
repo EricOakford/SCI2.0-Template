@@ -1,0 +1,14 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 306.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default306 =  0
+	[P_Room 21] = [1 PContainedAccess 9 63 0 53 47 62 68 77 74 81 94 104 110 107 122 319 124 319 0]
+	[P_Hole 11] = [1 PTotalAccess 4 316 4 316 14 296 14 296 5]
+	[P_Water 27] = [1 PBarredAccess 12 90 189 84 168 84 142 82 119 67 105 55 84 58 67 74 72 77 94 102 111 104 123 111 187]
+	[P_Cliff 11] = [1 PBarredAccess 4 316 126 316 188 116 188 110 121]
+	[P_Bones1 11] = [1 PBarredAccess 4 96 64 110 77 79 92 79 64]
+	[P_Bones2 11] = [1 PBarredAccess 4 202 106 178 108 177 96 198 90]
+)

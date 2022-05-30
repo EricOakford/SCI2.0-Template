@@ -1,0 +1,22 @@
+;;; Sierra Script
+;;; 17.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_DAWN 1)
+(define C_MORNING 2)
+(define C_NOON 3)
+(define C_AFTERNOON 4)
+(define C_SUNSET 5)
+(define C_NIGHT 6)
+(define C_MIDNIGHT 7)
+(define C_EARLY 8)
+(define C_YES 9)
+(define C_NO 10)
+
+;;; NOUNS
+
+(define N_TIME_OF_DAY 2)
+(define N_ARE_YOU_SURE 1)
+

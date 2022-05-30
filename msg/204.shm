@@ -1,0 +1,17 @@
+;;; Sierra Script
+;;; 204.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_GUARD_STOPS 1)
+(define C_DISGUISED_DAY 2)
+(define C_DISGUISED_NIGHT 3)
+(define C_DISCARD_WEARING 4)
+(define C_DISCARD_NOT_WEARING 5)
+
+;;; NOUNS
+
+(define N_GUARD 1)
+(define N_ROOM 2)
+

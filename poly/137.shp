@@ -1,0 +1,10 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 137.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default137 =  0
+	[P_Wall 37] = [1 PBarredAccess 17 253 52 258 131 246 123 239 130 228 125 223 130 222 162 207 167 195 151 194 77 126 76 127 152 121 161 100 161 75 137 54 128 54 43]
+	[P_Floor 19] = [1 PContainedAccess 8 259 189 282 181 251 165 234 165 200 164 128 163 60 167 32 189]
+)

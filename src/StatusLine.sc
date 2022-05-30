@@ -2,7 +2,7 @@
 ;
 ;	STATUSLINE.SC
 ;
-;	This script manages the game's status line
+;	This script manages the game's status line.
 ;	As SCI32 did away with the DrawStatus kernel call,
 ;	this now has to be done entirely in the script.
 ;

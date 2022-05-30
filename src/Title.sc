@@ -56,7 +56,7 @@
 							init:
 						)
 						(buttonStart
-							(curRoom newRoom: TESTROOM)
+							(curRoom newRoom: 110)
 							(break)
 						)
 						(buttonRestore

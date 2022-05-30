@@ -1,0 +1,53 @@
+;;; Sierra Script
+;;; 431.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; CASES
+
+(define C_BUTCH_FREE 1)
+(define C_AFTER_DATE 2)
+(define C_BAR 3)
+(define C_DRINKS 4)
+(define C_TOWN 5)
+(define C_CUSTOMERS 6)
+(define C_BARTENDERS 7)
+(define C_DATE 8)
+(define C_THIEF_GUILD 9)
+(define C_DRAGON_BREATH 10)
+(define C_BUTCHER 11)
+(define C_MURDER 12)
+(define C_BAKER 13)
+(define C_GET_DRAGON_BREATH 14)
+(define C_DATE_AFTER 19)
+(define C_ALREADY_AGREED 20)
+(define C_FIRST 21)
+(define C_AGAIN 22)
+(define C_ALREADY_BOUGHT 15)
+(define C_NOT_ENOUGH 16)
+(define C_BEER 17)
+(define C_WHISKEY 18)
+(define C_ROUND 23)
+(define C_KEG 24)
+
+;;; NOUNS
+
+(define N_ROOM 1)
+(define N_SIGN 2)
+(define N_BARTENDER 3)
+(define N_BAKER 4)
+(define N_BARBER 5)
+(define N_CARDS 6)
+(define N_TRAPDOOR 7)
+(define N_TABLE 8)
+(define N_STOOL 9)
+(define N_WINDOW 10)
+(define N_HERMIT 11)
+(define N_WEAPON_MASTER 12)
+(define N_STOOL2 13)
+(define N_BEER 14)
+(define N_WHISKEY 15)
+(define N_ROUND 16)
+(define N_KEG 17)
+(define N_BUY_DRINK 18)
+(define N_DRINK_IT 19)
+

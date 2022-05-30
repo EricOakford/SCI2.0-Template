@@ -1,0 +1,11 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 168.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default168 =  0
+	[P_Floor 31] = [1 PTotalAccess 14 121 161 104 124 74 124 74 87 101 87 120 65 145 65 149 68 187 78 222 78 222 104 208 106 173 164 122 164]
+	[P_NorthWall 11] = [1 PBarredAccess 4 318 84 1 82 1 0 319 2]
+	[P_SouthWall 23] = [1 PBarredAccess 10 1 117 83 114 111 136 114 155 141 178 209 169 230 135 318 127 318 187 3 189]
+)

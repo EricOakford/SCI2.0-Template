@@ -1,0 +1,9 @@
+;;; Sierra Script 1.0 - (do not remove this comment)
+;;; 10.shp -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion polygon editor
+
+
+(local
+	P_Default10 =  0
+	[P_Tree 53] = [1 PBarredAccess 25 194 146 181 139 184 127 174 100 170 102 154 104 148 100 137 102 111 89 106 75 118 65 144 57 146 44 161 34 193 35 222 36 249 41 269 53 285 80 277 96 253 97 234 104 221 100 205 113 207 138]
+)

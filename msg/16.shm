@@ -1,0 +1,24 @@
+;;; Sierra Script
+;;; 16.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_DAZZLE 1)
+(define N_OPEN 2)
+(define N_FLAMEDART 3)
+(define N_LOOK 4)
+(define N_DO 5)
+(define N_OK 6)
+(define N_HELP 7)
+(define N_SPELL 8)
+(define N_LOVE 9)
+(define N_HEAL 10)
+(define N_LEP_GOLD 11)
+(define N_DETECT 12)
+(define N_ZAP 13)
+
+;;; CASES
+
+(define C_NO_WEAPON 1)
+
