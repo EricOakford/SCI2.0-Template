@@ -2,14 +2,14 @@
 ;;; 168.shm -- Produced by SCI Companion
 ;;; This file should only be edited with the SCI Companion message editor
 
+;;; NOUNS
+
+(define N_ROOM 1)
+
 ;;; CASES
 
 (define C_FIRST 1)
 (define C_BARNARD_GREETS 2)
 (define C_AFTER_BARNARD 3)
 (define C_BRIGHT_SIDE 4)
-
-;;; NOUNS
-
-(define N_ROOM 1)
 

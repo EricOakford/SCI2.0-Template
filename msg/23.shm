@@ -1,0 +1,15 @@
+;;; Sierra Script
+;;; 23.shm -- Produced by SCI Companion
+;;; This file should only be edited with the SCI Companion message editor
+
+;;; NOUNS
+
+(define N_ROOM 1)
+
+;;; CASES
+
+(define C_STILL_HAVE_POINTS 1)
+(define C_YES 2)
+(define C_NO 3)
+(define C_CANCEL 4)
+

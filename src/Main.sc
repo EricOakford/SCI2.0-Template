@@ -270,7 +270,7 @@
 ;;;		((= oldStats oldStatArray)
 ;;;			init:
 ;;;		)
-		(= userName (String new:))
+		(= userName (String new: 40))
 		((= altPolyList (List new:)) name: {altPolys} add:)
 
 		;load up the ego, icon bar, inventory, control panel, and status line
@@ -324,6 +324,7 @@
 		(if
 			;run the regular cycle stuff
 			(and
+				(not (Btst fTimeStopped))
 				(curRoom isKindOf: HeroRoom)
 				(curRoom timePasses?)
 				(!= oldSysTime (= thisTime (GetTime SysTime1)))
@@ -466,18 +467,18 @@
 	(method (solvePuzzle pValue pFlag)
 		;Adds an amount to the player's current score.
 		;It checks if a certain flag is set so that the points are awarded only once.
-		(if (and (> argc 1) (gameFlags test: pFlag))
+		(if (and (> argc 1) (scoreFlags test: pFlag))
 			(return)
 		)
 		(if pValue
 			(+= score pValue)
+			(statusLineCode doit: curRoomNum)
+			(pointsSound play:)
 			(if (and (> argc 1) pFlag)
-				(gameFlags set: pFlag)
-				(statusLineCode doit: curRoomNum)
-				(pointsSound play:)
+				(scoreFlags set: pFlag)
 			)
 		)
-	)
+	)	
 
 	(method (showAbout)
 		((ScriptID GAME_ABOUT 0) doit:)
@@ -489,7 +490,7 @@
 		(if argc
 			(curRoom newRoom: GAME_RESTART)
 		else
-			;the game's quit dialog
+			;the game's restart dialog
 			(if (YesOrNo N_RESTART)
 				(curRoom newRoom: GAME_RESTART)
 			)
@@ -528,33 +529,33 @@
 				(switch who
 					;Add the talkers here, using the defines you set in the message editor
 					;from TALKERS.SH
-					(BAGI		(ScriptID rStarbucks 1))
-					(BANKER		(ScriptID tlkBanker	0))
-					(BARNARD	(ScriptID tlkBarnard 0))
-					(BARTENDER	(ScriptID tlkBartender 0))
-					(BELLA		(ScriptID tlkBella 0))
-					(BIG_JIM	(ScriptID 135 1))
-					(BIG_JURG	(ScriptID tlkJurgBros 0))
-					(BONEHEAD	(ScriptID tlkBonehead 0))
-					(BUTCH		(ScriptID tlkButch 0))
-					(CASSIDY	(ScriptID rButcherShop 1))
-					(CAVEMAN	(ScriptID rCavemen 1))
-					(CLETUS		(ScriptID rConfedGate 1))
-					(GARGOYLE	(ScriptID tlkGargoyle 0))
-					(GHOST		(ScriptID rChurchInside 2))
-					(HEALER		(ScriptID rHealerInside 1))
-					(HILDE		(ScriptID tlkHilde 0))
-					(HIPPIE		(ScriptID rEranasPeace 1))
-					(KASPAR		(ScriptID tlkKaspar 0))
-					(LAWYER		narrator) ;(ScriptID rOgreArea 1))
-					(LIL_JURG	(ScriptID tlkJurgBros	1))
-					(MEEP		(ScriptID tlkMeep 0))
-					(MERV		(ScriptID rTownOutside 1))
-					(MOBSTER	(ScriptID tlkMobster 0))
-					(MONK		(ScriptID rChurchInside 1))
-					(RICHARD	(ScriptID tlkRichard 0))
-					(WITCH_MAMA	(ScriptID rWitchHouse 1))
-					(WOLFGANG	(ScriptID rGuildHall	1))
+;;;					(BAGI		(ScriptID rStarbucks 1))
+;;;					(BANKER		(ScriptID tlkBanker	0))
+;;;					(BARNARD	(ScriptID tlkBarnard 0))
+;;;					(BARTENDER	(ScriptID tlkBartender 0))
+;;;					(BELLA		(ScriptID tlkBella 0))
+;;;					(BIG_JIM	(ScriptID 135 1))
+;;;					(BIG_JURG	(ScriptID tlkJurgBros 0))
+;;;					(BONEHEAD	(ScriptID tlkBonehead 0))
+;;;					(BUTCH		(ScriptID tlkButch 0))
+;;;					(CASSIDY	(ScriptID rButcherShop 1))
+;;;					(CAVEMAN	(ScriptID rCavemen 1))
+;;;					(CLETUS		(ScriptID rConfedGate 1))
+;;;					(GARGOYLE	(ScriptID tlkGargoyle 0))
+;;;					(GHOST		(ScriptID rChurchInside 2))
+;;;					(HEALER		(ScriptID rHealerInside 1))
+;;;					(HILDE		(ScriptID tlkHilde 0))
+;;;					(HIPPIE		(ScriptID rEranasPeace 1))
+;;;					(KASPAR		(ScriptID tlkKaspar 0))
+;;;					(LAWYER		narrator) ;(ScriptID rOgreArea 1))
+;;;					(LIL_JURG	(ScriptID tlkJurgBros	1))
+;;;					(MEEP		(ScriptID tlkMeep 0))
+;;;					(MERV		(ScriptID rTownOutside 1))
+;;;					(MOBSTER	(ScriptID tlkMobster 0))
+;;;					(MONK		(ScriptID rChurchInside 1))
+;;;					(RICHARD	(ScriptID tlkRichard 0))
+;;;					(WITCH_MAMA	(ScriptID rWitchHouse 1))
+;;;					(WOLFGANG	(ScriptID rGuildHall	1))
 					(else  narrator)
 				)
 			)
@@ -604,6 +605,8 @@
 				ICON_LOOK
 				ICON_DO
 				ICON_TALK
+				ICON_ACTIONS
+				ICON_CAST
 				ICON_USEIT
 				ICON_INVENTORY
 		)
@@ -619,6 +622,8 @@
 			ICON_LOOK
 			ICON_DO
 			ICON_TALK
+			ICON_ACTIONS
+			ICON_CAST
 			ICON_USEIT
 			ICON_INVENTORY
 		)
@@ -627,6 +632,9 @@
 		)
 		(if (not (theIconBar curInvIcon?))
 			(theIconBar disable: ICON_USEIT)
+		)
+		(if (not [egoStats MAGIC])
+			(theIconBar disable: ICON_CAST)
 		)
 		(if oldCurIcon
 			(theIconBar curIcon: oldCurIcon)

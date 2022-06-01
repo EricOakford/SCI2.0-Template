@@ -23,12 +23,14 @@
 	buttonStart
 	buttonRestore
 	buttonQuit
+	buttonImport
+	buttonIntro
 )
 
 (instance titleRm of Room
 	(properties
-		style			SHOW_FADE_IN
-		picture		pTITLE
+		style			SHOW_VSHUTTER_IN
+		picture		scriptNumber
 	)
 	(method (init)
 		(super init: &rest)
@@ -48,15 +50,16 @@
 				(repeat
 					(switch
 						((= str (Print new:))
-							posn: 9 165
-							font: SYSFONT
-							addButton: buttonStart N_ROOM 0 0 1 0 0 TITLE
-							addButton: buttonRestore N_ROOM 0 0 2 115 0 TITLE
-							addButton: buttonQuit N_ROOM 0 0 3 230 0 TITLE
+							posn: 175 -1
+							font: 8
+							addButton: buttonIntro N_ROOM NULL C_INTRO 1 0 0 TITLE
+							addButton: buttonStart N_ROOM NULL C_NEW_HERO 1 0 25 TITLE
+							addButton: buttonImport N_ROOM NULL C_IMPORT 1 0 50 TITLE
+							addButton: buttonRestore N_ROOM 0 C_CONTINUE 1 0 75 TITLE
 							init:
 						)
 						(buttonStart
-							(curRoom newRoom: 110)
+							(curRoom newRoom: CHARSEL)
 							(break)
 						)
 						(buttonRestore
@@ -64,6 +67,10 @@
 						)
 						(buttonQuit
 							(theGame quitGame: 1)
+							(break)
+						)
+						(buttonIntro
+							(curRoom newRoom: rIntro1)
 							(break)
 						)
 					)

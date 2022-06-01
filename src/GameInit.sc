@@ -80,18 +80,18 @@
 		(= numDACs (DoSound SndNumDACs))
 		(= debugging TRUE)	;Set this to FALSE to disable the debug features
 		(= howFast (SpeedTest))
-		(= platType (Platform GetPlatType))
-		(= colorDepth (Platform GetColorDepth))
-		(Printf
-			{howFast is %d\n
-			numVoices is %d\n
-			numDACs is %d\n
-			IsHiRes is %d\n
-			platType is %d\n
-			colorDepth is %d
-			}
-			howFast numVoices numDACs (IsHiRes) platType colorDepth
-		)
+;;;		(= platType (Platform GetPlatType))
+;;;		(= colorDepth (Platform GetColorDepth))
+;;;		(Printf
+;;;			{howFast is %d\n
+;;;			numVoices is %d\n
+;;;			numDACs is %d\n
+;;;			IsHiRes is %d\n
+;;;			platType is %d\n
+;;;			colorDepth is %d
+;;;			}
+;;;			howFast numVoices numDACs (IsHiRes) platType colorDepth
+;;;		)
 		(theIconBar enable:)
 		
 		;start at 11 AM

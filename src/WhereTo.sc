@@ -24,7 +24,7 @@
 		picture pSpeedTest
 	)
 	
-	(method (init &tmp str nextRoom)
+	(method (init &tmp str nextRoom statLevel whichSkill whichSpell)
 		(super init:)
 		(= str (String new:))
 		(= nextRoom 0)
@@ -39,6 +39,18 @@
 		(if str
 			(= nextRoom (str asInteger:))
 		)
+		; set up debugging stats
+;;;		(= statLevel 200)
+;;;		(for ((= whichSkill 0)) (< whichSkill OPEN) ((++ whichSkill))
+;;;			(= [egoStats whichSkill] statLevel)
+;;;		)
+;;;		(= [egoStats EXPER] 1900)
+;;;		(= [egoStats HEALTH] (ego maxHealth:))
+;;;		(= [egoStats STAMINA] (ego maxStamina:))
+;;;		(= [egoStats MANA] (ego maxMana:))
+;;;		(for ((= whichSpell 0)) (< whichSpell 22) ((++ whichSpell))
+;;;			(= [egoStats (+ OPEN whichSpell)] statLevel)
+;;;		)
 		(self newRoom: nextRoom)
 	)
 )

@@ -8,4 +8,9 @@
 
 ;;; CASES
 
+(define C_INTRO 1)
+(define C_NEW_HERO 2)
+(define C_CONTINUE 3)
+(define C_IMPORT 4)
+(define C_QUIT 5)
 
