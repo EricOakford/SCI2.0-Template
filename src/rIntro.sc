@@ -22,9 +22,9 @@
 (instance headingPrint of Print
 	(properties
 		modeless DLG_MODELESS
-		back 0
+		back 254
 		font 8
-		fore 48
+		fore 52
 	)
 )
 
@@ -62,6 +62,7 @@
 					mode: teJustCenter
 					ticks: 200
 					addText: (str data?)
+					skip: 254
 					init:
 				)
 				(= ticks 240)

@@ -110,7 +110,7 @@
 					(= projX ((= evt (Event new:)) x?))
 					(= projY (+ (evt y?) 25))
 					(evt dispose:)
-					(CastDart 0 0 projX projY)
+					;(CastDart 0 0 projX projY)
 				)
 			)
 			(V_WHISTLE
@@ -163,7 +163,7 @@
 					view: vEgoRun
 					origStep: 2053
 					setStep:
-					setCycle: egoStopWalk vEgoStand
+					setCycle: StopWalk vEgoStand
 				)
 			)
 			(MOVE_SNEAK
@@ -171,7 +171,7 @@
 					view: vEgoSneak
 					origStep: 1026
 					setStep:
-					setCycle: egoStopWalk -1
+					setCycle: StopWalk -1
 				)
 			)
 			(else 
@@ -179,7 +179,7 @@
 					view: vEgo
 					origStep: 1027
 					setStep:
-					setCycle: egoStopWalk vEgoStand
+					setCycle: StopWalk vEgoStand
 				)
 			)
 		)
@@ -206,7 +206,8 @@
 			setLoop: -1
 			setPri: -1
 			setMotion: 0
-			setCycle: egoStopWalk vEgoStand
+			setLooper: GradualLooper
+			setCycle: StopWalk vEgoStand
 			z: 0
 			illegalBits: 0
 			ignoreActors: FALSE
@@ -529,5 +530,3 @@
 		)
 	)
 )
-
-(instance egoStopWalk of StopWalk)

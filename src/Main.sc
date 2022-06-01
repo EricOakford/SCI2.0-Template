@@ -159,6 +159,7 @@
 	spCostLepGold	=		10
 	contentLevel
 	egoGait
+	egoSpeed
 	disabledActions
 	heroType
 	oldSysTime
@@ -290,26 +291,18 @@
 		(if debugging
 			((ScriptID DEBUG 0) init:)
 		)
-		(if
-			;all rooms where you can encounter a monster
-			(OneOf roomNum
-				111 112 117 118 119 123 124 125 126 127 133
-				134 135 136 142 143 144 151 152 156 157 161
-				162 163 169 171 172 174 175 179 180 181 185
-				186 192
-			)
-			(ScriptID rgENCOUNTER)
-		)
+;;;		(if
+;;;			;all rooms where you can encounter a monster
+;;;			(OneOf roomNum
+;;;				111 112 117 118 119 123 124 125 126 127 133
+;;;				134 135 136 142 143 144 151 152 156 157 161
+;;;				162 163 169 171 172 174 175 179 180 181 185
+;;;				186 192
+;;;			)
+;;;			(ScriptID rgENCOUNTER)
+;;;		)
 		(statusLineCode doit: roomNum)
 		(super startRoom: roomNum)
-		(if
-			(and
-				(ego cycler?)
-				(not (ego looper?))
-				((ego cycler?) isKindOf: StopWalk)
-			)
-			(ego setLooper: stopGroop)
-		)
 	)
 	
 	(method (save)
@@ -321,6 +314,7 @@
 	)
 	
 	(method (doit &tmp thisTime)
+		(super doit:)
 		(if
 			;run the regular cycle stuff
 			(and
@@ -400,7 +394,6 @@
 				)
 			)
 		)	;end of timekeeping code
-		(super doit:)
 	)
 
 
@@ -447,12 +440,43 @@
 								(event claimed: TRUE)
 							)
 						)
-						(`#6
+						(`#7
 							(if (not (& ((theIconBar at: ICON_CONTROL) signal?) DISABLED))
 								(theGame restore:)
 								(event claimed: TRUE)
 							)
 						)
+						(`#9
+							(if
+								(and
+									(User canInput:)
+									(User canControl:)
+									(not (& ((theIconBar at: ICON_CONTROL) signal?) DISABLED))
+								)
+								(if (talkers size:)
+									(return (talkers size:))
+								)
+								(theGame restart:)
+								(event claimed: TRUE)
+							)
+						)
+						(`+
+							(if (user controls?)
+								(= egoSpeed (Max 0 (-- egoSpeed)))
+								(ego setSpeed: egoSpeed)
+							)
+						)
+						(`-
+							(if (user controls?)
+								(++ egoSpeed)
+								(ego setSpeed: egoSpeed)
+							)
+						)
+						(`=
+							(if (user controls?)
+								(ego setSpeed: 6)
+							)
+						)	
 					)
 				)
 			)
@@ -712,5 +736,3 @@
 (instance skillTickArray of IntArray)
 
 (instance oldStatArray of IntArray)
-
-(instance stopGroop of GradualLooper)

@@ -18,7 +18,7 @@
 	rm168 0
 )
 
-(instance rm168 of Room ;HeroRoom
+(instance rm168 of HeroRoom
 	(properties
 		picture scriptNumber
 		noun N_ROOM
@@ -27,7 +27,7 @@
 	)
 	
 	(method (init)
-		;(self setRegions: rgFOREST)
+		(self setRegions: rgFOREST)
 		(super init:)
 		(self addObstacle:
 			(&getpoly {NorthWall})
@@ -140,7 +140,6 @@
 		view vGuard
 		x 136
 		y 79
-		signal ignrAct
 	)
 )
 
@@ -149,6 +148,5 @@
 		view vGuard
 		x 113
 		y 118
-		signal ignrAct
 	)
 )

@@ -454,7 +454,7 @@ code_02f3:
 						(if thiefSignResponse
 							(messager say: NULL V_THIEF_SIGN NULL 0 self modNum)
 						else
-							(messager say: N_THIEFSIGN NULL C_THIEF_SIGN 0 self 23)
+							(messager say: N_THIEFSIGN NULL C_THIEF_SIGN 0 self scriptNumber)
 						)
 					else
 						(self sayMessage:)

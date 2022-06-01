@@ -61,6 +61,7 @@
 					posn: -1 40
 					mode: teJustCenter
 					addText: (str data?)
+					ticks: 120
 					init:
 				)
 				(ego
@@ -75,6 +76,7 @@
 					posn: -1 40
 					mode: teJustCenter
 					addText: (str data?)
+					ticks: 120
 					init:
 				)
 				(ego
@@ -88,6 +90,7 @@
 					modeless: DLG_MODELESS
 					posn: -1 40
 					mode: teJustCenter
+					ticks: 120
 					addText: (str data?)
 					init:
 				)

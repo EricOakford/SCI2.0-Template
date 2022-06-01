@@ -59,7 +59,6 @@
 		(= myLowlightColor (Palette PalMatch 159 159 159))
 		(= myHighlightColor 0)
 		(= userFont USERFONT)
-		(= systemPlane GameWindow)
 		(Print
 			back: myBackColor
 			fore: myTextColor
@@ -69,6 +68,7 @@
 			fore: myTextColor
 			back: myBackColor
 		)
+		(= egoSpeed 4)
 		(= useSortedFeatures TRUE)
 		(= eatMice 30)
 		

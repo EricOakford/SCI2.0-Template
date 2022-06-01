@@ -98,7 +98,7 @@
 		)
 		(cond 
 			((== stat -1)
-				(text2 format: {%d} theScore)
+				(text2 format: {%d/%d} theScore possibleScore)
 				(valueBack posn: nsLeft nsTop)
 				(valueLow posn: (- nsLeft 1) nsTop)
 			)
@@ -108,12 +108,12 @@
 				(valueLow posn: (- nsLeft 28) nsTop)
 			)
 			((== stat 18)
-				(text2 format: {%d/%d} [egoStats 18] (ego maxStamina:))
+				(text2 format: {%d/%d} [egoStats STAMINA] (ego maxStamina:))
 				(valueBack posn: (- nsLeft 27) nsTop)
 				(valueLow posn: (- nsLeft 28) nsTop)
 			)
 			((== stat 19)
-				(text2 format: {%d/%d} [egoStats 19] (ego maxMana:))
+				(text2 format: {%d/%d} [egoStats MANA] (ego maxMana:))
 				(valueBack posn: (- nsLeft 27) nsTop)
 				(valueLow posn: (- nsLeft 28) nsTop)
 			)
@@ -159,7 +159,7 @@
 	)
 	
 	(method (show)
-		(= state (| state $0020))
+		(|= state IB_ACTIVE)
 		(= nsBottom (+ nsTop 8))
 	)
 )
@@ -448,8 +448,8 @@
 			addCast: newCast
 		)
 		(= temp1 (IntArray new: 4))
-		(= heroX (IntArray with: 169 169 169))
-		(= heroY (IntArray with: 150 150 150))
+		(= heroX (IntArray with: 169 180 169))
+		(= heroY (IntArray with: 145 145 145))
 		(= userNameSize (userName size:))
 		(temp1 dispose:)
 		(self
@@ -483,10 +483,10 @@
 		(|= state $0020)
 		(Message MsgGet scriptNumber
 			(switch heroType
-				(0 2)
-				(1 3)
-				(2 4)
-				(3 5)
+				(FIGHTER 2)
+				(MAGIC_USER 3)
+				(THIEF 4)
+				(PALADIN 5)
 			)
 			0
 			0

@@ -152,8 +152,8 @@
 			width:		100
 			mode:		teJustCenter
 			addText:	question NULL NULL 1 0 0 MAIN
-			addButton:	TRUE N_ARE_YOU_SURE NULL C_YES 1 0 25 MAIN
-			addButton:	FALSE N_ARE_YOU_SURE NULL C_NO 2 75 25 MAIN
+			addButton:	TRUE N_ARE_YOU_SURE NULL C_YES 1 0 25 scriptNumber
+			addButton:	FALSE N_ARE_YOU_SURE NULL C_NO 1 75 25 scriptNumber
 			init:
 		)
 	)

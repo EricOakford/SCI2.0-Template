@@ -482,11 +482,14 @@
 				(= [egoStats STAMINA] (ego maxStamina:))
 				(= [egoStats MANA] (ego maxMana:))
 				((= namePrompt (Print new:))
-					mode: teJustCenter
 					addText: N_NAME NULL NULL 1 0 0 scriptNumber
-					addEdit: userName 25 0 10
+					addEdit: userName 25 0 10 userName
 					init:
 				)
+				;release the event handlers!
+				(mouseDownHandler release:)
+				(keyDownHandler release:)
+				(directionHandler release:)
 				(theIconBar enable:)
 				(curRoom newRoom: 168)
 			)

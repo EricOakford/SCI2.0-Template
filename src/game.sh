@@ -18,7 +18,7 @@
 (define	QG2_NUM_ATTRIBS 30)
 (define QG3_NUM_ATTRIBS 34)
 (define QG4_NUM_ATTRIBS 42)
-(define NUM_ATTRIBS 25)
+(define NUM_ATTRIBS 45)
 (define NUM_SPELLS 8)
 
 (define GAMEDAY 3600)	;number of ticks per game day
@@ -27,9 +27,6 @@
 (define STAM_RATE	20)		;recovery rate for stamina
 (define HEAL_RATE	15)		;recovery rate for health
 (define MANA_RATE	5)		;recovery rate for mana
-
-(define STARTTELL 0)
-(define ENDTELL	999)
 
 ; Character Classes
 (enum

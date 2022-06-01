@@ -65,4 +65,5 @@
 (define V_THIEF_SIGN 59)
 (define V_HERO_TELL 60)
 (define V_HIPPIE_TELL 61)
+(define V_MERV_TELL 62)
 

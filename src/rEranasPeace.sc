@@ -43,14 +43,6 @@
 			;tree has fruit on it now
 			(= picture 10)
 		)
-		;need to overhaul the Teller class for SCI32 to use array instances
-;;;		(= [hippieTellTree 0] @hippieTellMainBranch)
-;;;		(= [hippieTellTree 1] @hippieTell1)
-;;;		(= [hippieTellTree 2] @hippieTell2)
-;;;		(= [hippieTellTree 3] @hippieTell3)
-;;;		(= [hippieTellTree 4] @hippieTell4)
-;;;		(= [hippieTellTree 5] ENDTELL)
-
 		(super init:)
 		(self addObstacle: (&getpoly {Room}) (&getpoly {TreeBase}))
 		(ego

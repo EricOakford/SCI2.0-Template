@@ -52,6 +52,7 @@
 							ALT-F - (vacant)\n
 							ALT-G - show/set/clear Flag\n
 							ALT-I - get Inventory Item\n
+							ALT-M - show Memory\n
 							ALT-P - (vacant)\n
 							ALT-R - show Room info\n
 							ALT-S - (vacant)\n
@@ -140,7 +141,15 @@
 						(= obj (String newWith: 75 {}))
 						(obj
 							format:
-								{name: %s\nview: %d\nloop: %d\ncel: %d\nposn: %d %d %d\nheading: %d\npri: %d\nsignal: $%x\nscript: %s\n}
+								{name: %s\n
+								view: %d\n
+								loop: %d\n
+								cel: %d\n
+								posn: %d %d %d\n
+								heading: %d\n
+								pri: %d\n
+								signal: $%x\n
+								script: %s\n}
 								(node name?)
 								(node view?)
 								(node loop?)
@@ -201,6 +210,9 @@
 						)
 					)
 					(`@i
+					)
+					(`@m
+						(theGame showMem:)
 					)
 					(`@p
 					)
