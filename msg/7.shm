@@ -4,21 +4,6 @@
 
 ;;; CASES
 
-(define C_INVEMPTY 1)
-(define C_CLEAN 2)
-(define C_EXPLICIT 3)
-(define C_ALREADY_WEARING 4)
-(define C_NO_MORE_RATIONS 5)
-(define C_HUNGRY 6)
-(define C_STARVING 7)
-(define C_NOT_HUNGRY 8)
-(define C_DONT_NEED_POTION 9)
-(define C_WORN_OUT 10)
-(define C_DRUGGED_BEER 11)
-(define C_NO_MANA 12)
-(define C_HURT_ME 13)
-(define C_FULL_HEALTH 14)
-(define C_NO_DAGGERS 15)
 
 ;;; NOUNS
 

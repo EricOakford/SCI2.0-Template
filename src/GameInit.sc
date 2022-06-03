@@ -16,7 +16,6 @@
 (use GameInv)
 (use Plane)
 (use Talker)
-(use Procs)
 (use User)
 (use System)
 (use SpeedTst)
@@ -54,60 +53,46 @@
 		(TextColors 0 15 23 5)
 		
 		;now set up the interface colors
-		(= myTextColor 66)
-		(= myBackColor 69)
+		(= myTextColor 0)
+		(= myBackColor 5)
 		(= myLowlightColor (Palette PalMatch 159 159 159))
 		(= myHighlightColor 0)
 		(= userFont USERFONT)
+		(= systemPlane GameWindow)
 		(Print
-			back: myBackColor
-			fore: myTextColor
+			back: 5
+			fore: 0
 		)
 		((= narrator Narrator)
 			font: userFont
 			fore: myTextColor
 			back: myBackColor
 		)
-		(= egoSpeed 4)
 		(= useSortedFeatures TRUE)
 		(= eatMice 30)
 		
 		(= msgType TEXT_MSG)
 		(= scoreFont 9)
-		(= possibleScore 500)
+		(= possibleScore 999)
 		(= score 0)
 		(= numVoices (DoSound SndNumVoices))
 		(= numDACs (DoSound SndNumDACs))
 		(= debugging TRUE)	;Set this to FALSE to disable the debug features
 		(= howFast (SpeedTest))
-;;;		(= platType (Platform GetPlatType))
-;;;		(= colorDepth (Platform GetColorDepth))
-;;;		(Printf
-;;;			{howFast is %d\n
-;;;			numVoices is %d\n
-;;;			numDACs is %d\n
-;;;			IsHiRes is %d\n
-;;;			platType is %d\n
-;;;			colorDepth is %d
-;;;			}
-;;;			howFast numVoices numDACs (IsHiRes) platType colorDepth
-;;;		)
+		(= platType (Platform GetPlatType))
+		(= colorDepth (Platform GetColorDepth))
+		(Printf
+			{howFast is %d\n
+			numVoices is %d\n
+			numDACs is %d\n
+			IsHiRes is %d\n
+			platType is %d\n
+			colorDepth is %d
+			}
+			howFast numVoices numDACs (IsHiRes) platType colorDepth
+		)
 		(theIconBar enable:)
-		
-		;start at 11 AM
-		(FixTime 11)
 		;give ego initial items
-		(ego get: iMoney 1000)
-		(ego get: iLeather)
-		(ego get: iFood 5)		
-		;keep the cost of each spell
-		(= spellCost 2)	;spCostOpen
-		(= spCostDetect 2)
-		(= spCostDazzle 3)
-		(= spCostZap 3)
-		(= spCostFlame 5)
-		(= spCostLove 10)
-		(= spCostHeal 10)
-		(= spCostLepGold 10)
+		(ego get: iMoney)
 	)
 )

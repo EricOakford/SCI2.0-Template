@@ -9,231 +9,71 @@
 (include pics.sh) (include views.sh) ;graphical defines
 (include system.sh) (include sci2.sh) ;system and kernel functions
 (include talkers.sh) (include verbs.sh) ;message defines
-(include icons.sh)
-(include nums.sh)
-(include flags.sh)
+;
+; Global stuff
 
-; General Game Defines
-(define QG1_NUM_ATTRIBS 25)
-(define	QG2_NUM_ATTRIBS 30)
-(define QG3_NUM_ATTRIBS 34)
-(define QG4_NUM_ATTRIBS 42)
-(define NUM_ATTRIBS 45)
-(define NUM_SPELLS 8)
+(define	MAIN			0)
+(define GAME_WINDOW		1)
+(define STATUS_LINE		2)
+(define	GAME_ROOM		3)
+(define MOVIE			4)
+(define GAME_CONTROLS	5)
+(define GAME_INV		6)
+(define GAME_EGO		7)
+(define DEBUG			8)
+(define GAME_ABOUT		9)
+(define DEATH			10)
+(define GAME_ICONBAR	11)
+(define GAME_INIT		12)
+(define WHERE_TO		13)
+(define GAME_RESTART	14)
 
-(define GAMEDAY 3600)	;number of ticks per game day
-(define GAMEHOUR 150) 	;number of ticks per game hour
+;
+; Actual rooms
+(define	TITLE			100)
+(define ROOM101			101)
+(define	TESTROOM		110)
 
-(define STAM_RATE	20)		;recovery rate for stamina
-(define HEAL_RATE	15)		;recovery rate for health
-(define MANA_RATE	5)		;recovery rate for mana
-
-; Character Classes
+; Indices for the icons in the icon bar
 (enum
-	FIGHTER
-	MAGIC_USER
-	THIEF
-	PALADIN
-)
-
-; Battle results
-(enum
-	battleEGOLOST
-	battleEGOWON
-	battleEGORUNS
-)
-
-; Ego Moving Modes
-(enum
-	MOVE_WALK		;0
-	MOVE_RUN		;1
-	MOVE_SNEAK		;2
-)
-
-; Skills
-(enum
-	STR			;0
-	INT			;1
-	AGIL		;2
-	VIT			;3
-	LUCK		;4
-	WEAPON		;5
-	PARRY		;6
-	DODGE		;7
-	STEALTH		;8
-	PICK		;9
-	THROW		;10
-	CLIMB		;11
-	MAGIC		;12
-	COMM		;13
-	HONOR		;14
-	ACROBATICS	;15
-	EXPER		;16		;Unused
-	HEALTH		;17
-	STAMINA		;18
-	MANA		;19
-; Magic Spells
-	OPEN			;20
-	DETMAGIC		;21
-	TRIGGER			;22
-	DAZZLE			;23
-	ZAP				;24
-	CALM			;25
-	FLAMEDART		;26
-	FETCH			;27
-	FORCEBOLT		;28
-	LEVITATE		;29
-	REVERSAL		;30
-	JUGGLE			;31
-	STAFF			;32
-	LIGHTNING		;33
-	FROSTBITE		;34
-	RITUAL			;35
-	INVISIBILITY	;36
-	AURA			;37
-	PROTECTION		;38
-	RESISTANCE		;39
-	GLIDE			;40
-	HEALING			;41
-	ENDSTATS		;42
-	;QFG4.5 exclusive spells. They should be last.
-	HEAL
-	LOVE
-	LEPGOLD	
+	ICON_WALK
+	ICON_LOOK
+	ICON_DO
+	ICON_TALK
+	ICON_CUSTOM
+	ICON_CURITEM
+	ICON_INVENTORY
+	ICON_CONTROL
+	ICON_HELP
 )
 
 ;Inventory items
 (enum
 	iMoney
-	iFood
-	iSkeletonKey
-	iSword
-	iShield
-	iLaundryNote
-	iAmulet
-	iVase
-	iCandelabra
-	iHellCandle
-	iPearls
-	iEvidence
-	iBonehead
-	iHealingPotion
-	iVigorPotion
-	iManaPotion
-	iUndeadElixir
-	iSleepingPills
-	iBeerKeg
-	iLockPick
-	iMeepToy
-	iDragonsBreath
-	iLeather
-	iChainmail
-	iDagger
-	iGargoyleCard
-	iLasso
-	iShovel
-	iCleoBones
-	iBallerinaCard
-	iAMTMCard
-	iInflatableBear
-	iFingerBone
-	iGiantClothes
-	iWhistle
-	iBong
-	iLoveLetter
-	iGhostMoney
 	iLastInvItem	;this MUST be last
 )
+;(define NUM_INVITEMS (- iLastInvItem 1))
 
-; Times of Day
-(enum
-	TIME_DAWN
-	TIME_MIDMORNING
-	TIME_MIDDAY
-	TIME_MIDAFTERNOON
-	TIME_SUNSET
-	TIME_NIGHT
-	TIME_MIDNIGHT
-	TIME_NOTYETDAWN
-)
-
-;Ware return values
-(define notEnough -1)
-(define buyNothing 0)
-;afterwards is room-specific
-
-;Content levels
-(enum
-	contentCLEAN
-	contentMODERATE
-	contentEXPLICIT
-)
+;Sound defines
+(define sDeath 10)
+(define sPoints 950)
 
 ;Death reasons
-(enum
+(enum 1
 	deathGENERIC
-	deathSTARVATION
-	deathSODOMY
-	deathGANGSTERS
-	deathBAGI
-	deathGUARD
-	deathCAVEMEN
-	deathCHIEFTHIEF
-	deathWITCH
-	deathGIANTFAIRY
-	deathBANKROBBERY
-	deathOVERWORK
-	deathFLAMED
-	deathATTACK_REDNECKS
-	deathBELLA_VAMPIRE
-	deathAMULET_TRAP
-	deathBEAUDINE
-	deathBEAUDINE_TALK
-	deathDUNGEON
-	deathGOBLIN
-	deathGUARD_FIGHT
-	deathROGUE
-	deathDAGGER
-	deathBURGLAR_JURG
 )
 
-;Which badge is being worn
-(enum
-	badgeNONE
-	badgeTIEDYE
-	badgeCONFED
-	badgeUNDEAD
-)
+;Flag handler defines
+;NOTE: These are intended to replace the Bset, Btst, and Bclr procedures.
+;However, SCICompanion does not yet support macro defines.
+;;;(define Bset	gameFlags set:)
+;;;(define Btst	gameFlags test:)
+;;;(define Bclr	gameFlags clear:)
+(define NUMFLAGS 128)
 
-;Bella's state
+;Event flags
 (enum
-	bellaInitial
-	bellaWantsToTalk
-	bellaKilled
-	bellaVampire
-	bellaGotLoveNote
-	bellaGone
-)
-
-;Cleo's state
-(enum
-	cleoInitial
-	cleoFirstTalk
-	cleoGotShovel
-	cleoDugUpBones
-	cleoBuriedBones
-	cleoLastTalk
-	cleoDugUpMoney
-	cleoGaveMoney
-	cleoMurdererKilled
-)
-
-;Meeps' state
-(enum
-	meepInitial
-	meepRichardTaunt
-	meepHealed
-	meepKilledBeaudine
-	meepThrewFlute
-	meepGotFlute
+	fInMainGame
+	fAutoSaveOn
+	fWonGame
 )

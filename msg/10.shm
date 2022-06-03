@@ -2,41 +2,15 @@
 ;;; 10.shm -- Produced by SCI Companion
 ;;; This file should only be edited with the SCI Companion message editor
 
-;;; CASES
-
-(define C_GENERIC 1)
-(define C_STARVATION 2)
-(define C_GANGSTERS 3)
-(define C_BAGI 4)
-(define C_GANGSTERS_CLEAN 5)
-(define C_BAGI_CLEAN 6)
-(define C_GUARD 7)
-(define C_CAVEMEN 8)
-(define C_CHIEF_THIEF 9)
-(define C_WITCH 10)
-(define C_GIANT_FAIRY 11)
-(define C_BANK_ROBBERY 12)
-(define C_SODOMY 13)
-(define C_BURGLAR_JURG 14)
-(define C_OVERWORK 15)
-(define C_FLAMED 16)
-(define C_ATTACK_REDNECKS 17)
-(define C_BELLA_VAMPIRE 18)
-(define C_BARNARD_CAUGHT 19)
-(define C_FROZEN 20)
-(define C_AMULET_TRAP 21)
-(define C_DUNGEON 22)
-(define C_BEAUDINE 23)
-(define C_BEAUDINE_TALK 24)
-(define C_GOBLIN 25)
-(define C_ROGUE 26)
-(define C_GUARD_FIGHT 27)
-(define C_FLOWER 28)
-
 ;;; NOUNS
 
 (define N_DEATH 1)
-(define N_RESTORE 2)
-(define N_RESTART 3)
-(define N_QUIT 4)
+
+;;; CASES
+
+(define C_GENERIC 1)
+(define C_RESTORE 2)
+(define C_TRY_AGAIN 3)
+(define C_RESTART 4)
+(define C_QUIT 5)
 

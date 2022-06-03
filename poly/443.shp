@@ -1,9 +1,0 @@
-;;; Sierra Script 1.0 - (do not remove this comment)
-;;; 443.shp -- Produced by SCI Companion
-;;; This file should only be edited with the SCI Companion polygon editor
-
-
-(local
-	P_Default443 =  0
-	[P_Picture 11] = [1 PBarredAccess 4 190 63 190 31 230 30 231 68]
-)

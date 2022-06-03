@@ -76,21 +76,19 @@
 				;zero out all game-specific globals
 				(for ((= i 100)) (<= i 200) ((++ i))
 					;EXCEPT for those meant to be retained
-					(if (OneOf i
-							100 101 102 103 104 105 106 107 108 109
-						)
+					(if (OneOf i 100 101 102 103 104 105 106)
 						0
 					else
 						(= [ego i] 0)
 					)
 				)
-				;run the game initialization code
+				;run the game initialization code again
 				((ScriptID GAME_INIT 0) doit:)
 				(DisposeScript GAME_INIT)
 				(= cycles 2)
 			)
 			(startTheGame
-				(= nextRoom (if debugging WHERE_TO else NOTICE))
+				(= nextRoom (if debugging WHERE_TO else TITLE))
 				(curRoom newRoom: nextRoom)
 			)
 		)

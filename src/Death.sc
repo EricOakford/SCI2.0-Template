@@ -50,7 +50,7 @@
 		(theIconBar disable:)
 		(theGame setCursor: normalCursor TRUE)
 		(super init:)
-		(self setScript: deathScript)
+		(curRoom setScript: deathScript)
 	)
 )
 
@@ -58,6 +58,7 @@
 	(method (changeState newState &tmp case)
 		(switch (= state newState)
 			(waitABit
+				(deathMusic number: sDeath play:)
 				(= cycles 2)
 			)
 			(setItUp
@@ -70,14 +71,13 @@
 				)
 				(= deadView
 					(switch deathReason
-						(deathGENERIC vDeathIcons)
-						(else vDeathIcons)
+						(deathGENERIC vDeathSkull)
+						(else vDeathSkull)
 					)
 				)
 				(= ticks 20)
 			)
 			(showMessage
-				(deathMusic play:)
 				(repeat
 					(switch
 						(deathPrint
@@ -87,9 +87,9 @@
 							width: 200
 							addTitle: N_DEATH NULL case 2 DEATH
 							addText: N_DEATH NULL case 1 DEATH
-							addButton: 1 N_RESTORE NULL NULL 1 30 30 DEATH
-							addButton: 2 N_RESTART NULL NULL 1 80 30 DEATH
-							addButton: 3 N_QUIT NULL NULL 1 130 30 DEATH
+							addButton: 1 N_DEATH NULL C_RESTORE 1 30 30 DEATH
+							addButton: 2 N_DEATH NULL C_RESTART 1 80 30 DEATH
+							addButton: 3 N_DEATH NULL C_QUIT 1 130 30 DEATH
 							init:
 						)
 						(1
@@ -112,7 +112,6 @@
 
 (instance deathMusic of Sound
 	(properties
-		number sDeath
 		flags mNOPAUSE
 	)
 )

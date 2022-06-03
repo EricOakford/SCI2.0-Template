@@ -11,6 +11,4 @@
 (define C_WHERETO 1)
 (define C_CONTINUE 2)
 (define C_RESTORE 3)
-(define C_TOWN 4)
-(define C_NEW_HERO 5)
 

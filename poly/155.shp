@@ -1,9 +1,0 @@
-;;; Sierra Script 1.0 - (do not remove this comment)
-;;; 155.shp -- Produced by SCI Companion
-;;; This file should only be edited with the SCI Companion polygon editor
-
-
-(local
-	P_Default155 =  0
-	[P_Room 25] = [1 PBarredAccess 11 0 0 319 0 319 189 319 133 179 122 270 143 234 168 115 152 75 164 0 140 0 189]
-)

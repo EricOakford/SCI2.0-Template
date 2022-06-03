@@ -1,9 +1,0 @@
-;;; Sierra Script 1.0 - (do not remove this comment)
-;;; 434.shp -- Produced by SCI Companion
-;;; This file should only be edited with the SCI Companion polygon editor
-
-
-(local
-	P_Default434 =  0
-	[P_Room 23] = [1 PContainedAccess 10 177 115 173 136 104 139 68 165 38 161 2 185 291 187 213 143 210 139 205 125]
-)

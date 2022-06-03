@@ -2,6 +2,9 @@
 ;;; 5.shm -- Produced by SCI Companion
 ;;; This file should only be edited with the SCI Companion message editor
 
+;;; CASES
+
+
 ;;; NOUNS
 
 (define N_ABOUT 1)
@@ -16,8 +19,6 @@
 (define N_HELP 10)
 (define N_SCORE 11)
 (define N_MSGMODE 12)
-(define N_CONTENT 13)
-
-;;; CASES
-
+(define N_VOICE 13)
+(define N_TEXT 14)
 
