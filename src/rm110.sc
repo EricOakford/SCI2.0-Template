@@ -1,5 +1,5 @@
 ;;; Sierra Script 1.0 - (do not remove this comment)
-(script# TESTROOM)
+(script# rTestRoom)
 (include game.sh) (include "110.shm")
 (use Main)
 (use LoadMany)
@@ -17,7 +17,7 @@
 
 (instance rm110 of Room
 	(properties
-		picture scriptNumber
+		picture pWhite
 		style SHOW_IRIS_IN
 		horizon 50
 		vanishingX 130

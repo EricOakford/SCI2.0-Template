@@ -48,8 +48,8 @@
 (instance iconWalk of IconItem
 	(properties
 		x ICON_X
-		mainView vIconBar
-		mainLoop lWalkIcon
+		mainView vIcons
+		mainLoop lIconWalk
 		mainCel 0
 		type (| userEvent walkEvent)
 		message V_WALK
@@ -59,16 +59,16 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 0
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 0
 	)
 )
 
 (instance iconLook of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lLookIcon
+		mainView vIcons
+		mainLoop lIconLook
 		mainCel 0
 		message V_LOOK
 		signal (| HIDEBAR RELVERIFY)
@@ -77,8 +77,8 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 1
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 1
 	)
 
@@ -99,8 +99,8 @@
 
 (instance iconDo of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lDoIcon
+		mainView vIcons
+		mainLoop lIconHand
 		mainCel 0
 		message V_DO
 		signal (| HIDEBAR RELVERIFY)
@@ -109,8 +109,8 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 2
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 2
 	)
 
@@ -131,8 +131,8 @@
 
 (instance iconTalk of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lTalkIcon
+		mainView vIcons
+		mainLoop lIconTalk
 		mainCel 0
 		message V_TALK
 		signal (| HIDEBAR RELVERIFY)
@@ -141,8 +141,8 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 3
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 3
 	)
 	
@@ -163,15 +163,15 @@
 
 (instance iconCustom of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lCustomIcon
+		mainView vIcons
+		mainLoop lIconCustom
 		mainCel 0
 		message 0
 		signal IMMEDIATE
 		noun N_CUSTOM
 		helpVerb V_HELP
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 9
 	)
 	
@@ -197,15 +197,15 @@
 
 (instance iconUseIt of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lItemIcon
+		mainView vIcons
+		mainLoop lIconInvItem
 		mainCel 0
 		message 0
 		signal (| HIDEBAR RELVERIFY)
 		noun N_CURITEM
 		helpVerb V_HELP
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 4
 	)
 	(method (init)
@@ -225,16 +225,16 @@
 
 (instance iconInventory of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lInvIcon
+		mainView vIcons
+		mainLoop lIconInventory
 		mainCel 0
 		type nullEvt
 		message 0
 		signal (| HIDEBAR RELVERIFY IMMEDIATE)
 		noun N_INVENTORY
 		helpVerb V_HELP
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 5
 	)
 
@@ -266,15 +266,15 @@
 
 (instance iconControlPanel of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lControlIcon
+		mainView vIcons
+		mainLoop lIconControls
 		mainCel 0
 		message V_CONTROL
 		signal (| HIDEBAR RELVERIFY IMMEDIATE)
 		noun N_CONTROL
 		helpVerb V_HELP
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 7
 	)
 	
@@ -306,8 +306,8 @@
 
 (instance iconHelp of IconItem
 	(properties
-		mainView vIconBar
-		mainLoop lHelpIcon
+		mainView vIcons
+		mainLoop lIconHelp
 		mainCel 0
 		type helpEvent
 		message V_HELP
@@ -317,8 +317,8 @@
 		cursorView vIconCursors
 		cursorLoop 0
 		cursorCel 4
-		maskView vIconBar
-		maskLoop lDisabledIcon
+		maskView vIcons
+		maskLoop lIconDisabled
 		maskCel 8
 	)
 	(method (init)

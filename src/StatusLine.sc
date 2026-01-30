@@ -34,7 +34,7 @@
 		(scoreBuf format: statusBuf score possibleScore)
 		
 		;set up the plane except in rooms where it's not shown
-		(if (not (OneOf roomNum TITLE WHERE_TO DEATH GAME_RESTART))
+		(if (not (OneOf roomNum rTitle WHERE_TO DEATH GAME_RESTART))
 			(statusPlane
 				priority: (+ (GetHighPlanePri) 1)
 				addCast: (= statCast (Cast new:))

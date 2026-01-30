@@ -23,7 +23,7 @@
 
 (instance restartRoom of Room
 	(properties
-		picture pSpeedTest
+		picture pBlack
 		style SHOW_IRIS_OUT
 	)
 	
@@ -76,19 +76,22 @@
 				;zero out all game-specific globals
 				(for ((= i 100)) (<= i 200) ((++ i))
 					;EXCEPT for those meant to be retained
-					(if (OneOf i 100 101 102 103 104 105 106)
+					(if (OneOf i 100 101 102 103 104 105 106 107 108 109 110)
 						0
 					else
 						(= [ego i] 0)
 					)
 				)
+				;re-init the colors, since they were all zeroed-out
+				((ScriptID COLOR_INIT 0) doit:)
+				
 				;run the game initialization code again
 				((ScriptID GAME_INIT 0) doit:)
 				(DisposeScript GAME_INIT)
 				(= cycles 2)
 			)
 			(startTheGame
-				(= nextRoom (if debugging WHERE_TO else TITLE))
+				(= nextRoom (if debugging WHERE_TO else rTitle))
 				(curRoom newRoom: nextRoom)
 			)
 		)

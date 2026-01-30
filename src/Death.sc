@@ -15,10 +15,10 @@
 (use Dialog)
 (use DCIcon)
 (use Sound)
+(use Array)
 (use Motion)
 (use Game)
 (use System)
-(use Array)
 
 (public
 	deathRoom 0
@@ -41,12 +41,12 @@
 
 (instance deathRoom of Room
 	(properties
-		picture pSpeedTest
+		picture pBlack
 	)
 	
 	(method (init)
 		(theMusic fade:)
-		(globalSound fade:)
+		(theMusic2 fade:)
 		(theIconBar disable:)
 		(theGame setCursor: normalCursor TRUE)
 		(super init:)
@@ -58,7 +58,6 @@
 	(method (changeState newState &tmp case)
 		(switch (= state newState)
 			(waitABit
-				(deathMusic number: sDeath play:)
 				(= cycles 2)
 			)
 			(setItUp
@@ -75,6 +74,7 @@
 						(else vDeathSkull)
 					)
 				)
+				(deathMusic number: sDeath play:)
 				(= ticks 20)
 			)
 			(showMessage
@@ -100,7 +100,7 @@
 							(break)
 						)
 						(3
-							(theGame quitGame: 1)
+							(= quit TRUE)
 							(break)
 						)
 					)

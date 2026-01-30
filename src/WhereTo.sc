@@ -21,7 +21,7 @@
 
 (instance whereTo of Room
 	(properties
-		picture pSpeedTest
+		picture pBlack
 	)
 	
 	(method (init &tmp str nextRoom)
@@ -32,10 +32,11 @@
 			(Print
 				addText: N_ROOM NULL C_WHERETO 1 0 0 WHERE_TO
 				addEdit: str 5 115 0
+				addButton: rTitle N_ROOM NULL C_CONTINUE 1 0 20 WHERE_TO
 				init:
 			)
 		)
-		(= nextRoom TITLE)
+		(= nextRoom rTitle)
 		(if str
 			(= nextRoom (str asInteger:))
 		)

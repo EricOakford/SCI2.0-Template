@@ -3,6 +3,7 @@
 (include game.sh)
 (use Main)
 (use Intrface)
+(use Procs)
 (use String)
 (use Print)
 (use Feature)

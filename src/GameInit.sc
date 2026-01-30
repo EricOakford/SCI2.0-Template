@@ -9,17 +9,12 @@
 (script# GAME_INIT)
 (include game.sh) (include "0.shm")
 (use Main)
-(use GameEgo)
-(use GameWindow)
-(use GameIconBar)
-(use Print)
-(use GameInv)
-(use Plane)
 (use Talker)
-(use User)
 (use System)
 (use SpeedTst)
 (use String)
+(use Print)
+(use Plane)
 
 (local
 	platType
@@ -28,11 +23,15 @@
 )
 
 (public
-	GameInitCode 0
+	gameInitCode 0
 )
 
-(instance GameInitCode of Code	
+(instance gameInitCode of Code
 	(method (doit)
+		(= numVoices (DoSound SndNumVoices))
+		(= numDACs (DoSound SndNumDACs))
+		(= useSortedFeatures TRUE)
+		
 		;When you quit the game, a random message will appear at the DOS prompt.
 		;Customize these messages in the message editor as you see fit.
 		(= quitStr (String new:))
@@ -45,20 +44,25 @@
 		; Render messages with the |f2| tag in smallFont (default 4).
 		; Render messages with the |f3| tag in font 1307.		
 		(TextFonts SYSFONT userFont smallFont 1307)
+		
+		(theGame
+			setCursor: theCursor TRUE 304 172
+		)
+		;at this point, the color globals have already been initialized,
+		;so set the interface colors using them.	
+		(= myTextColor colBlack)
+		(= myBackColor colGray4)
+		(systemPlane back: myBackColor)
+
 		; These correspond to color codes used in messages (values into global palette).
 		; By default, render messages as color 0.
-		; Render messages with the |c1| tag as color 15.
-		; Render messages with the |c2| tag as color 23.
-		; Render messages with the |c3| tag as color 5.		
-		(TextColors 0 15 23 5)
+		; Render messages with the |c1| tag as very light-red
+		; Render messages with the |c2| tag as light-brown (dark yellow).
+		; Render messages with the |c3| tag as dark gray.
+		(TextColors colBlack colVLRed colDYellow colGray3)
 		
 		;now set up the interface colors
-		(= myTextColor 0)
-		(= myBackColor 5)
-		(= myLowlightColor (Palette PalMatch 159 159 159))
-		(= myHighlightColor 0)
 		(= userFont USERFONT)
-		(= systemPlane GameWindow)
 		(Print
 			back: 5
 			fore: 0
@@ -68,29 +72,24 @@
 			fore: myTextColor
 			back: myBackColor
 		)
-		(= useSortedFeatures TRUE)
-		(= eatMice 30)
-		
 		(= msgType TEXT_MSG)
-		(= scoreFont 9)
+		(= eatMice 30)
 		(= possibleScore 999)
 		(= score 0)
-		(= numVoices (DoSound SndNumVoices))
-		(= numDACs (DoSound SndNumDACs))
 		(= debugging TRUE)	;Set this to FALSE to disable the debug features
 		(= howFast (SpeedTest))
 		(= platType (Platform GetPlatType))
 		(= colorDepth (Platform GetColorDepth))
-		(Printf
-			{howFast is %d\n
-			numVoices is %d\n
-			numDACs is %d\n
-			IsHiRes is %d\n
-			platType is %d\n
-			colorDepth is %d
-			}
-			howFast numVoices numDACs (IsHiRes) platType colorDepth
-		)
+;;;		(Printf
+;;;			{howFast is %d\n
+;;;			numVoices is %d\n
+;;;			numDACs is %d\n
+;;;			IsHiRes is %d\n
+;;;			platType is %d\n
+;;;			colorDepth is %d
+;;;			}
+;;;			howFast numVoices numDACs (IsHiRes) platType colorDepth
+;;;		)
 		(theIconBar enable:)
 		;give ego initial items
 		(ego get: iMoney)

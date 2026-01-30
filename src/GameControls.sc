@@ -200,7 +200,7 @@
 ;;;				soundBar
 ;;;				musicBar
 ;;;				textBar
-			eachElementDo: #highlightColor 0
+			eachElementDo: #highlightColor colBlack
 			eachElementDo: #lowlightColor 2
 			eachElementDo: #modNum GAME_CONTROLS
 			curIcon: iconRestore
@@ -243,7 +243,7 @@
 		x 44
 		y 99
 		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lTextOffButton
 		helpVerb V_HELP
 	)
@@ -282,7 +282,7 @@
 		y 99
 		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lVoiceOffButton
 		helpVerb V_HELP
 	)
@@ -321,7 +321,7 @@
 		y 22
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lAboutButton
 		helpVerb V_HELP
 	)
@@ -334,7 +334,7 @@
 		y 70
 		signal (| VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message V_HELP
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lHelpButton
 		helpVerb V_HELP
 		cursorView vIconCursors
@@ -350,7 +350,7 @@
 		y 102
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lOKButton
 		helpVerb V_HELP
 	)
@@ -367,7 +367,7 @@
 		y 6
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lQuitButton
 		helpVerb V_HELP
 	)
@@ -380,7 +380,7 @@
 		y 86
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lRestartButton
 		helpVerb V_HELP
 	)
@@ -393,7 +393,7 @@
 		y 38
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lRestoreButton
 		helpVerb V_HELP
 	)
@@ -406,7 +406,7 @@
 		y 54
 		signal (| HIDEBAR VICON FIXED_POSN RELVERIFY IMMEDIATE)
 		message 0
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lSaveButton
 		helpVerb V_HELP
 	)
@@ -417,7 +417,7 @@
 		noun N_SPEED
 		x 7
 		y 6
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop 15
 		helpVerb V_HELP
 		maxValue 12
@@ -461,7 +461,7 @@
 		noun N_VOLUME
 		x 7
 		y 21
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop 15
 		mainCel 1
 		helpVerb V_HELP
@@ -489,7 +489,7 @@
 		noun N_VOLUME
 		x 7
 		y 36
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop 15
 		mainCel 2
 		helpVerb V_HELP
@@ -523,7 +523,7 @@
 		noun 34
 		x 7
 		y 51
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lControlBars
 		mainCel 4
 		helpVerb V_HELP
@@ -551,7 +551,7 @@
 		noun N_DETAIL
 		x 7
 		y 66
-		mainView vControlIcons
+		mainView vGameControls
 		mainLoop lControlBars
 		mainCel 0
 		helpVerb V_HELP
@@ -566,7 +566,7 @@
 	(properties
 		x 7
 		y 6
-		view vControlIcons
+		view vGameControls
 		loop lTestBar
 	)
 )
@@ -575,7 +575,7 @@
 	(properties
 		x 7
 		y 21
-		view vControlIcons
+		view vGameControls
 		loop lTestBar
 	)
 )
@@ -584,7 +584,7 @@
 	(properties
 		x 7
 		y 36
-		view vControlIcons
+		view vGameControls
 		loop lTestBar
 	)
 )
@@ -593,7 +593,7 @@
 	(properties
 		x 7
 		y 51
-		view vControlIcons
+		view vGameControls
 		loop lTestBar
 	)
 )
@@ -602,14 +602,14 @@
 	(properties
 		x 7
 		y 66
-		view vControlIcons
+		view vGameControls
 		loop lTestBar
 	)
 )
 
 (instance controlCel of View
 	(properties
-		view vControlIcons
+		view vGameControls
 		loop lControlFixture
 	)
 )
@@ -618,7 +618,7 @@
 	(properties
 		x 7
 		y 6
-		view vControlIcons
+		view vGameControls
 		loop 14
 	)
 )

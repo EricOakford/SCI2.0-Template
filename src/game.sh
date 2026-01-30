@@ -2,21 +2,22 @@
 ;**************************************************************
 ;***
 ;***	GAME.SH--
+;***	Put all the defines specific to your game in here
 ;***
 ;**************************************************************
 
 
-(include pics.sh) (include views.sh) ;graphical defines
+(include graphics.sh) ;graphical defines
 (include system.sh) (include sci2.sh) ;system and kernel functions
 (include talkers.sh) (include verbs.sh) ;message defines
+
 ;
 ; Global stuff
-
 (define	MAIN			0)
 (define GAME_WINDOW		1)
-(define STATUS_LINE		2)
+(define	DODISP			2)
 (define	GAME_ROOM		3)
-(define MOVIE			4)
+(define MOVIE			4)	;was SPEED_TEST, which is now a system script
 (define GAME_CONTROLS	5)
 (define GAME_INV		6)
 (define GAME_EGO		7)
@@ -26,14 +27,17 @@
 (define GAME_ICONBAR	11)
 (define GAME_INIT		12)
 (define WHERE_TO		13)
-(define GAME_RESTART	14)
+(define GAME_RESTART	14)	;was DISPOSE, which is no longer needed
+(define PROCS			15)
+(define COLOR_INIT		16)
+(define STATUS_LINE		17)
 
 ;
 ; Actual rooms
-(define	TITLE			100)
-(define ROOM101			101)
-(define	TESTROOM		110)
+(define rTitle			100)
+(define rTestRoom		110)
 
+;
 ; Indices for the icons in the icon bar
 (enum
 	ICON_WALK
@@ -41,35 +45,38 @@
 	ICON_DO
 	ICON_TALK
 	ICON_CUSTOM
-	ICON_CURITEM
+	ICON_ITEM
 	ICON_INVENTORY
 	ICON_CONTROL
 	ICON_HELP
 )
 
-;Inventory items
+;
+; Inventory items
+;Make sure they are in the same order you put them in the inventory list in GAME_INV.SC.
+;To avoid name conflicts, prefix the items with the letter "i".
 (enum
 	iMoney
 	iLastInvItem	;this MUST be last
 )
 ;(define NUM_INVITEMS (- iLastInvItem 1))
 
-;Sound defines
-(define sDeath 10)
-(define sPoints 950)
-
-;Death reasons
+;
+; Death reasons
 (enum 1
 	deathGENERIC
 )
 
-;Flag handler defines
-;NOTE: These are intended to replace the Bset, Btst, and Bclr procedures.
-;However, SCICompanion does not yet support macro defines.
-;;;(define Bset	gameFlags set:)
-;;;(define Btst	gameFlags test:)
-;;;(define Bclr	gameFlags clear:)
-(define NUMFLAGS 128)
+;
+; Sound defines
+(define sOpening	1)
+(define sDeath		2)
+(define sScore		3)
+
+; Event flags
+	;These flags are used by Bset, Btst, and Bclr.
+	;Example: fBabaFrog (original Sierra naming)
+(define NUMFLAGS 128)	;used for the Flags objects. If you need more flags, increase this.
 
 ;Event flags
 (enum
@@ -77,3 +84,11 @@
 	fAutoSaveOn
 	fWonGame
 )
+
+;NOTE: These are intended to replace various procedures.
+;However, SCICompanion does not yet support macro defines.
+;;;(define Bset	gameFlags set:)
+;;;(define Btst	gameFlags test:)
+;;;(define Bclr	gameFlags clear:)
+;;;(define SolvePuzzle theGame solvePuzzle:)
+;;;(define NormalEgo ego normalize:) 
